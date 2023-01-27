@@ -7,14 +7,19 @@ using UnityEditor.Animations;
 
 public class GrabbingObject : MonoBehaviour
 {
+    //ausiliar variable for identify the drawers
+    private int ausiliarVariableForIdentification;
+
     //bunker door animator variable.
     [SerializeField] private Animator bunkerDoorAnimationOpening; //variable where's contained the BunkerDoor Animator, used for working with conditions and parameters.
+    [SerializeField] private Animator[] DrawersOpeningAndClosingAnimator; //variable where are contained the Drawer Animators, used for working with conditions and parameters.
 
     //booleans values
     private bool isKeyGrabbedToThePlayer = false;  //boolean where is contained the information about the grab or not of the key.
     private bool isKeyCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingKeyText coroutine.
     private bool isKeyMissingCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingMissingKeyText coroutine.
     private bool isBunkerDoorOpeningCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingOpeningDoorBunkerText coroutine.
+    private bool[] areDrawersOpened = { false, false, false, false };
 
     //texts and images variables 
     [SerializeField] private TextMeshProUGUI doorBunkerOpeningTextAdvise;  //variable where's contained the text "Complimenti!Hai aperto il bunker!".
@@ -88,8 +93,48 @@ public class GrabbingObject : MonoBehaviour
                 StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
             }
         }
+        if((other.gameObject.CompareTag("SingleDrawerGameObject"))) //if the player's approaching at one of the drawers
+        {
+            if (other.gameObject.name == ("Drawer1")) //if the player's approaching at the first of the drawers
+            {
+                ausiliarVariableForIdentification = 0;
+                Debug.Log("first");
+                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+            }
+            else if (other.gameObject.name == ("Drawer2")) //if the player's approaching at the second of the drawers
+            {
+                ausiliarVariableForIdentification = 1;
+                Debug.Log("second");
+                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+            }
+            else if (other.gameObject.name == ("Drawer3")) //if the player's approaching at the third of the drawers
+            {
+                ausiliarVariableForIdentification = 2;
+                Debug.Log("third");
+                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+            }
+            else if (other.gameObject.name == ("Drawer4")) //if the player's approaching at the fourth of the drawers
+            {
+                ausiliarVariableForIdentification = 3;
+                Debug.Log("fourth");
+                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+            }
+        }
     }
 
+    //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
+    private void OpeningOrClosingParametersMethod(int numberOfDrawer)
+    {
+        ausiliarVariableForIdentification = numberOfDrawer;
+        if (areDrawersOpened[ausiliarVariableForIdentification] == false)
+        {
+            DrawersOpeningAndClosingAnimator[ausiliarVariableForIdentification].SetBool("IsDrawerOpened", acceptedTransition); //in this line of code,we set the "IsDrawerOpened" parameter(created in the animator controller) to true.
+        }
+        else if (areDrawersOpened[ausiliarVariableForIdentification] == true)
+        {
+            DrawersOpeningAndClosingAnimator[ausiliarVariableForIdentification].SetBool("CanBeClosedParameter", acceptedTransition); //in this line of code,we set the "CanBeClosedParameter" parameter(created in the animator controller) to true.
+        }
+    }
     //this function is used for get 3 second of waiting before the text is disabled.
     private IEnumerator TimeOfViewingKeyText()
     {

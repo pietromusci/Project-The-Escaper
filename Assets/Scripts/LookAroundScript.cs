@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class LookAroundScript : MonoBehaviour
 {
     private bool isPlayerInMovement = true;
-    private static float mouseSensitivity = 0.4f; //value of the sensitivty of the camera's rotation.
+    private static float touchSensitivity = 0.4f; //value of the sensitivty of the camera's rotation.
     //in this variable there's the transform component of the father-gameobject of the player.
     [SerializeField] private Transform playerBody;
     private float xRotation = 0.0f;
@@ -25,6 +25,7 @@ public class LookAroundScript : MonoBehaviour
     [SerializeField] private FixedJoystick fixedJoystickGameObject;  //joystick for the movement(it will used to verify if the player is in movement or not).
     private void Start()
     {
+        //initializations of the variables
         Vector2 touchStartPosition = new Vector2(0.0f, 0.0f);
         Vector2 touchEndPosition = new Vector2(0.0f, 0.0f);
     }
@@ -67,12 +68,12 @@ public class LookAroundScript : MonoBehaviour
         }
 
         //this line of script will get the 'x'movements of the mouse and the result will moltiplied for the 'y' rotation of the father-gameobject(line 24)
-        touchscreenInputX = axisTouchscreenInputX * mouseSensitivity * Time.deltaTime;
-        touchscreenInputY = axisTouchscreenInputY * mouseSensitivity * Time.deltaTime;
+        touchscreenInputX = axisTouchscreenInputX * touchSensitivity * Time.deltaTime;
+        touchscreenInputY = axisTouchscreenInputY * touchSensitivity * Time.deltaTime;
 
         xRotation = xRotation - touchscreenInputY;
-        xRotation = Mathf.Clamp(xRotation, -55.0f, +55.0f); //clamp the max and the minimum value that the varible can contain
-        transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
+        xRotation = Mathf.Clamp(xRotation, -75.00f, +65.00f); //clamp the max and the minimum value that the varible can contain
+        transform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f);
        
 
         //this part of script will rotate the y value of the rotation of the father-object

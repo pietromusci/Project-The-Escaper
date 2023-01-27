@@ -7,6 +7,7 @@ TagManager:
   - Pickuppable
   - Key
   - BunkerDoor
+  - SingleDrawerGameObject
   layers:
   - Default
   - TransparentFX

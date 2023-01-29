@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008399213, g: 0.008899745, b: 0.01908295, a: 1}
+  m_IndirectSpecularColor: {r: 0.008377835, g: 0.0088662505, b: 0.01908072, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8438,7 +8438,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: chiave
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 4282732266765904745, guid: a40ea15354b5b6642b304f29fd7ae91b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a40ea15354b5b6642b304f29fd7ae91b, type: 3}
 --- !u!4 &1691373055 stripped
 Transform:

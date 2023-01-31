@@ -8,6 +8,7 @@ TagManager:
   - Key
   - BunkerDoor
   - SingleDrawerGameObject
+  - Battery
   layers:
   - Default
   - TransparentFX

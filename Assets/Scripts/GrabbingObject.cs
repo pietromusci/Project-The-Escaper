@@ -7,12 +7,20 @@ using UnityEditor.Animations;
 
 public class GrabbingObject : MonoBehaviour
 {
+    //variable that is used to have the count of the actual batteries.
+    private int numberOfActualBatteries = 0;
+    private bool isBatteryTurnedOff = false;
+
     //ausiliar variable for identify the drawers
     private int ausiliarVariableForIdentification;
 
     //bunker door animator variable.
     [SerializeField] private Animator bunkerDoorAnimationOpening; //variable where's contained the BunkerDoor Animator, used for working with conditions and parameters.
     [SerializeField] private Animator[] DrawersOpeningAndClosingAnimator; //variable where are contained the Drawer Animators, used for working with conditions and parameters.
+
+    //lights of the flashlight gameobject variable.
+    [SerializeField] private GameObject lightTorchGameObject; //variable where's contained the light of the torch.
+    [SerializeField] private Image iconBatteryOfTheFlashlight;
 
     //booleans values
     private bool isKeyGrabbedToThePlayer = false;  //boolean where is contained the information about the grab or not of the key.
@@ -37,9 +45,10 @@ public class GrabbingObject : MonoBehaviour
     // Start function is called before the first frame update.(MAIN)
     private void Start()
     {
-        doorBunkerMissingKeyText.gameObject.SetActive(rejectedTransition); doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition);
-        keyIconImage.gameObject.SetActive(rejectedTransition); keyGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
-        clickerButtonVariable.gameObject.SetActive(rejectedTransition);
+        doorBunkerMissingKeyText.gameObject.SetActive(rejectedTransition);  doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition);
+        keyIconImage.gameObject.SetActive(rejectedTransition);  keyGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
+        clickerButtonVariable.gameObject.SetActive(rejectedTransition);  lightTorchGameObject.gameObject.SetActive(rejectedTransition);
+        iconBatteryOfTheFlashlight.gameObject.SetActive(rejectedTransition);
     }
 
     // Update function is called once per frame(MAIN2)
@@ -63,6 +72,14 @@ public class GrabbingObject : MonoBehaviour
         {
             doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition); // the text that inform the player who's opening the bunker door is sected to inactive.
             isBunkerDoorOpeningCoroutineEnded = false; 
+        }
+
+        if (isBatteryTurnedOff == true)  //if the LengthLifeOfTheBatteryCoroutine coroutine is ended.
+        {
+            lightTorchGameObject.gameObject.SetActive(false); //turns off the light
+            iconBatteryOfTheFlashlight.gameObject.SetActive(false);
+            numberOfActualBatteries--;
+            isBatteryTurnedOff = false;
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -120,6 +137,15 @@ public class GrabbingObject : MonoBehaviour
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
             }
         }
+        if ((other.gameObject.CompareTag("Battery")) && (numberOfActualBatteries < 1)) //if the player's approaching at one of the battery and the player doesn't have another of it
+        {
+            Destroy(other.gameObject);
+            numberOfActualBatteries++;
+            StartCoroutine(LengthLifeOfTheBatteryCoroutine());
+            lightTorchGameObject.gameObject.SetActive(true);
+           // iconBatteryOfTheFlashlight.gameObject.SetActive(true);
+            Debug.Log("the battery is in the inventory");
+        }
     }
 
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
@@ -154,5 +180,12 @@ public class GrabbingObject : MonoBehaviour
     {
         yield return (new WaitForSeconds(4.0f));  //4 seconds for read the text that inform the player who's opening the door for entry in the bunker.
         isBunkerDoorOpeningCoroutineEnded = true;
+    }
+
+    //this function is used for get 30 second of waiting before the battery turns off.
+    private IEnumerator LengthLifeOfTheBatteryCoroutine()
+    {
+        yield return (new WaitForSeconds(150.0f)); //150 seconds for turns off the battery selected.
+        isBatteryTurnedOff = true;
     }
 }

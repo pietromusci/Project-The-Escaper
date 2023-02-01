@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private GameObject emptyuemptyAusiliarJumpGameObject;
 
     [SerializeField] private CharacterController playerController; //reference to our character controller(motor that drives our player).
-    private static float speedOfTheMovement = 0.05f; //speed of the movement of the player.
+    private static float speedOfTheMovement = 0.085f; //speed of the movement of the player.
     private static float gravityNumber = (-9.81f * 2.5f); //this number is negative.
     private float jumpHeight = 2.0f;
 

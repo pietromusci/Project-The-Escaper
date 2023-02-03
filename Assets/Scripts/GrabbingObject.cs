@@ -51,7 +51,7 @@ public class GrabbingObject : MonoBehaviour
     {
         doorBunkerMissingKeyText.gameObject.SetActive(rejectedTransition);  doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition);
         keyIconImage.gameObject.SetActive(rejectedTransition);  keyGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
-        clickerButtonVariable.gameObject.SetActive(rejectedTransition);  lightTorchGameObject.gameObject.SetActive(rejectedTransition);
+        lightTorchGameObject.gameObject.SetActive(rejectedTransition);
         iconBatteryOfTheFlashlight.gameObject.SetActive(rejectedTransition); batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
     }
@@ -190,6 +190,13 @@ public class GrabbingObject : MonoBehaviour
             DrawersOpeningAndClosingAnimator[ausiliarVariableForIdentification].SetBool("CanBeClosedParameter", acceptedTransition); //in this line of code,we set the "CanBeClosedParameter" parameter(created in the animator controller) to true.
         }
     }
+
+    //this function is used for set open the door.
+    private void SectedOpenOrCloseDrawer(int drawernumber)
+    {
+        ausiliarDrawerVar[drawernumber] = 1;
+    }
+
     //this function is used for get 3 second of waiting before the text is disabled.
     private IEnumerator TimeOfViewingKeyText()
     {
@@ -211,28 +218,25 @@ public class GrabbingObject : MonoBehaviour
         isBunkerDoorOpeningCoroutineEnded = true;
     }
 
-    //this function is used for get 30 second of waiting before the battery turns off.
+    //this function is used for get 150 second of waiting before the battery turns off.
     private IEnumerator LengthLifeOfTheBatteryCoroutine()
     {
         yield return (new WaitForSeconds(150.0f)); //150 seconds for turns off the battery selected.
         isBatteryTurnedOff = true;
     }
 
+    //this funtion is used for get 5 second of waiting for reading the grab battery text.
     private IEnumerator TimeOfViewingGrabBatteryText()
     {
         yield return (new WaitForSeconds(5.0f)); //5 seconds for read the text that inform the player who has just grabbed the battery for the flashlight.
         isBatteryGrabbed = true;
     }
     
+    //this function is used for get 4 seconds of waiting for reading the "has already the battery" text. 
     private IEnumerator HasAlreadyTheBatteryCoroutine()
     {
         yield return (new WaitForSeconds(4.0f)); //4 seconds for read the text that inform the player who has got already the battery.
         hasAlreadyBatteryText = true;
     }
 
-    //this function is used for- 
-    private void SectedOpenOrCloseDrawer(int drawernumber)
-    {
-        ausiliarDrawerVar[drawernumber] = 1;
-    }
 }

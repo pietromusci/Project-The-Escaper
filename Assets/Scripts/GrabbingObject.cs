@@ -9,13 +9,14 @@ public class GrabbingObject : MonoBehaviour
 {
     //variable that is used to have the count of the actual batteries.
     private int numberOfActualBatteries = 0;
-
+    private int ausiliarVarBunkerDoor = 0;
     //ausiliar variable for identify the drawers
     private int ausiliarVariableForIdentification;
     private int[] ausiliarDrawerVar = { 0, 0, 0, 0 };
 
     //bunker door animator variable.
-    [SerializeField] private Animator bunkerDoorAnimationOpening; //variable where's contained the BunkerDoor Animator, used for working with conditions and parameters.
+    [SerializeField] private Animator firstbunkerDoorAnimationOpening; //variable where's contained the first BunkerDoor Animator, used for working with conditions and parameters.
+    [SerializeField] private Animator secondBunkerDoorAnimationOpening; //variable where's contained the second BunkerDoor Animator, used for working with conditions and parameters.
     [SerializeField] private Animator[] DrawersOpeningAndClosingAnimator; //variable where are contained the Drawer Animators, used for working with conditions and parameters.
 
     //lights of the flashlight gameobject variable.
@@ -112,21 +113,33 @@ public class GrabbingObject : MonoBehaviour
                 StartCoroutine(TimeOfViewingKeyText()); //start of 5 second of coroutine. 
             }
         }
+
         if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
         {
-            if (isKeyGrabbedToThePlayer == true)  //if the player has the key 
+
+            if ((isKeyGrabbedToThePlayer == true))  //if the player has the key 
             {
+
+                if (ausiliarVarBunkerDoor == 0) //this condition verify if the player is opening the first of the second door of the bunker. 
+                {
+                    firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
+                }
+                if (ausiliarVarBunkerDoor == 1)
+                {
+                    secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
+                }
                 doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
-                bunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the animator controller) to true.
-                Destroy(keyIconImage.gameObject); //destroy the icon of the key.
+                keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
                 StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
+                ausiliarVarBunkerDoor = 1;
             }
-            else if (isKeyGrabbedToThePlayer == false)  //if the player doesn't have the key 
+            else if ((isKeyGrabbedToThePlayer == false))   //if the player doesn't have the key 
             {
                 doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
                 StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
             }
         }
+
         if ((other.gameObject.CompareTag("SingleDrawerGameObject")) && (ausiliarVariableForIdentification != 0)) //if the player's approaching at one of the drawers
         {
             if ((other.gameObject.name == ("Drawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
@@ -158,6 +171,7 @@ public class GrabbingObject : MonoBehaviour
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
             }
         }
+
         if ((other.gameObject.CompareTag("Battery")) && (numberOfActualBatteries < 1)) //if the player's approaching at one of the battery and the player doesn't have another of it
         {
             Destroy(other.gameObject);

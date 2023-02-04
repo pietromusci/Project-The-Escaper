@@ -71,7 +71,7 @@ public class GameManager1 : MonoBehaviour
         float secondsOfCountdown = Mathf.FloorToInt(currentTimeValueDisplay % 60);
 
         countdownTextUI.text = string.Format("{0:00}:{1:00}", minutesOfCountdown, secondsOfCountdown);
-        if ((minutesOfCountdown == 0)&&(secondsOfCountdown<=5))
+        if ((minutesOfCountdown == 0) && (secondsOfCountdown <= 10)) 
         {
             countdownTextUI.color = Color.red;
         }

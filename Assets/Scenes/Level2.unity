@@ -152,7 +152,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.2
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -451,6 +451,7 @@ GameObject:
   - component: {fileID: 1475524608491883673}
   - component: {fileID: 2582187961366774588}
   - component: {fileID: 302076581891700726}
+  - component: {fileID: 2582187961366774589}
   m_Layer: 0
   m_Name: Finished_House_2
   m_TagString: Untagged
@@ -465,4 +466,18 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2247803624852936227}
+  m_Mesh: {fileID: -5399012549893847015, guid: e643d3bdaeaab2b4fa113b15c11bda7e, type: 3}
+--- !u!64 &2582187961366774589
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2247803624852936227}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
   m_Mesh: {fileID: -5399012549893847015, guid: e643d3bdaeaab2b4fa113b15c11bda7e, type: 3}

@@ -10,6 +10,7 @@ public class GrabbingObject : MonoBehaviour
     //variable that is used to have the count of the actual batteries.
     private int numberOfActualBatteries = 0;
     private int ausiliarVarBunkerDoor = 0;
+    private bool areDoorsFixed = false;
     //ausiliar variable for identify the drawers
     private int ausiliarVariableForIdentification;
     private int[] ausiliarDrawerVar = { 0, 0, 0, 0 };
@@ -40,6 +41,7 @@ public class GrabbingObject : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyGrabbedTextAdvise; //variable where's contained the text "Hai appena raccolto una chiave!Ora sta a te capire dove utilizzarla".
     [SerializeField] private TextMeshProUGUI batteryGrabbedTextAdvise; //variable where's contained the text "Hai appena raccolto una batteria per la torcia".
     [SerializeField] private TextMeshProUGUI alreadyHasTheBatteryTextAdvise; //variable where's contained the text "Non puoi raccogliere la batteria,ne hai già una inserita nella torcia!".
+
     //buttons variables
     [SerializeField] private Button clickerButtonVariable; //clicker button. 
 
@@ -116,22 +118,21 @@ public class GrabbingObject : MonoBehaviour
 
         if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
         {
-
             if ((isKeyGrabbedToThePlayer == true))  //if the player has the key 
             {
-
-                if (ausiliarVarBunkerDoor == 0) //this condition verify if the player is opening the first of the second door of the bunker. 
-                {
-                    firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
-                }
-                if (ausiliarVarBunkerDoor == 1)
+                if ((ausiliarVarBunkerDoor == 1) && (areDoorsFixed == true))
                 {
                     secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
                 }
+                else if (ausiliarVarBunkerDoor == 0) //this condition verify if the player is opening the first of the second door of the bunker. 
+                {
+                    firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
+                    StartCoroutine(FixingDoorBug());
+                }
+
                 doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
                 keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
                 StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
-                ausiliarVarBunkerDoor = 1;
             }
             else if ((isKeyGrabbedToThePlayer == false))   //if the player doesn't have the key 
             {
@@ -205,6 +206,14 @@ public class GrabbingObject : MonoBehaviour
         }
     }
 
+    //coroutine for don't have bugs for the key with the opening of both the doors.
+    private IEnumerator FixingDoorBug()
+    {
+        yield return (new WaitForSeconds(1.0f));
+        ausiliarVarBunkerDoor = 1;
+        areDoorsFixed = true;
+    }
+
     //this function is used for set open the door.
     private void SectedOpenOrCloseDrawer(int drawernumber)
     {
@@ -252,5 +261,4 @@ public class GrabbingObject : MonoBehaviour
         yield return (new WaitForSeconds(4.0f)); //4 seconds for read the text that inform the player who has got already the battery.
         hasAlreadyBatteryText = true;
     }
-
 }

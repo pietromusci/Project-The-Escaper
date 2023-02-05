@@ -33,7 +33,7 @@ public class UIScene : MonoBehaviour
     //function that return 4 seconds of waiting for the coroutine.
     public IEnumerator LoadingCoroutine()
     {
-        Debug.Log("The Coroutine is started");
+        Debug.Log("The Coroutine of loading sub-scene started");
         yield return new WaitForSeconds(4);
         isCoroutineEnded = true;
         Debug.Log("The Coroutine is ended and it returns 4 seconds of stop.");

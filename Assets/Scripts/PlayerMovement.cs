@@ -5,7 +5,7 @@ using UnityEngine.UI; //library where's the button.
 using UnityEngine.SceneManagement; 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject emptyuemptyAusiliarJumpGameObject;
+    [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement. 
 
     [SerializeField] private CharacterController playerController; //reference to our character controller(motor that drives our player).
     private static float speedOfTheMovement = 0.085f; //speed of the movement of the player.
@@ -26,11 +26,11 @@ public class PlayerMovement : MonoBehaviour
     //end game variables 
     private int ausiliarCoroutineVariable = 0;
 
-    public bool isGameDisactive;
     // Update is called once per frame
     void Update()
     {
-        if (isGameDisactive == false) 
+        
+        if (!ausiliarGO2Move.activeSelf) //if the gameobject is identified inactive(the timer is arrived to 0)
         {
             //                    |sphere creation|     |position of sphere|               |radius of sphere||check if the sphere is collided to the ground|
             isPlayerGrounded = Physics.CheckSphere(groundCheckerGameObjectTransform.position, groundDistance, groundMask);

@@ -7,6 +7,9 @@ using TMPro;
 
 public class GameManager1 : MonoBehaviour
 {
+    [SerializeField] private GameObject ausiliarGO1Look; //gameobject used for block the camera movement. 
+    [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
+
     public int levelNumber = 0;
     //declaration variables.
     private bool isCoroutineEnded = false;
@@ -19,7 +22,7 @@ public class GameManager1 : MonoBehaviour
     //variables that are used for the countdown.
     [SerializeField] private TextMeshProUGUI countdownTextUI;
     [SerializeField] private TextMeshProUGUI failureLevelAdviseUI;
-    private float valueTimeForCountdown= 10.00f;  //varibale that is used for slides the time how the reality.
+    private float valueTimeForCountdown= 300.00f;  //varibale that is used for slides the time how the reality.
     public bool isGameEnded;  //boolean that verify if the timer is expired(scaduto).
 
     public PlayerMovement playerMovementScriptGO;
@@ -66,7 +69,7 @@ public class GameManager1 : MonoBehaviour
     //function that return 3 seconds of waiting for the coroutine.
     private IEnumerator LoadingCoroutine()
     {
-        yield return new WaitForSeconds(3); // three seconds of waiting.
+        yield return new WaitForSeconds(4.5f); // three seconds of waiting.
         isCoroutineEnded = true;
     }
 
@@ -91,16 +94,15 @@ public class GameManager1 : MonoBehaviour
                 StartCoroutine(FailureLevelCoroutine());
                 failureLevelAdviseUI.gameObject.SetActive(true);
                 Debug.Log("il tenpo è scaduto, riprova!");
-                playerMovementScriptGO.isGameDisactive = true;
-                lookAroundScriptGO.isGameDisactive = true;
-                Debug.Log(playerMovementScriptGO.isGameDisactive); Debug.Log(lookAroundScriptGO.isGameDisactive);
+                ausiliarGO1Look.gameObject.SetActive(true);
+                ausiliarGO2Move.gameObject.SetActive(true);
             }
         }
     }
 
     private IEnumerator FailureLevelCoroutine()
     {
-        yield return new WaitForSeconds(7.5f);
+        yield return new WaitForSeconds(10.0f);
         isFailureCoroutineEnded = true;
     }
 }

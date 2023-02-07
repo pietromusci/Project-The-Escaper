@@ -4,10 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class LookAroundScript : MonoBehaviour
 {
-    private bool isPlayerInMovement = true;
     private static float touchSensitivity = 0.4f; //value of the sensitivty of the camera's rotation.
-    //in this variable there's the transform component of the father-gameobject of the player.
-    [SerializeField] private Transform playerBody;
+    [SerializeField] private Transform playerBody;  //in this variable there's the transform component of the father-gameobject of the player.
+    private bool isPlayerInMovement = true;
     private float xRotation = 0.0f;
 
     //touchscreen axis' variables.
@@ -18,13 +17,14 @@ public class LookAroundScript : MonoBehaviour
     private Touch theTouch; //vector 2 that reveals the position of the touch got from the input of the player
     private Vector2 touchEndPosition;
     private Vector2 touchStartPosition;
+
     //axis.
     private float axisTouchscreenInputX;
     private float axisTouchscreenInputY;
 
+    //joystick and ausiliar gameobject for block the movement.
     [SerializeField] private FixedJoystick fixedJoystickGameObject;  //joystick for the movement(it will used to verify if the player is in movement or not).
-
-    public bool isGameDisactive;
+    [SerializeField] private GameObject ausiliarGO1Look;  //gameobject used for block the camera movement.
     private void Start()
     {
         //initializations of the variables
@@ -35,7 +35,7 @@ public class LookAroundScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isGameDisactive == false)
+        if (!ausiliarGO1Look.activeSelf)
         {
             //condition that verify if the player is in movement(the result will go on "isPlayerInMovement"variable)
             if ((fixedJoystickGameObject.Horizontal == 0) && (fixedJoystickGameObject.Vertical == 0))

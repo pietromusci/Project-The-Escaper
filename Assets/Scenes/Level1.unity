@@ -1396,6 +1396,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d475c14bd0127e34eb250472d7edb425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ausiliarGO1Look: {fileID: 691420613}
+  ausiliarGO2Move: {fileID: 755605462}
   levelNumber: 1
   loadingSubScene: {fileID: 1561334236}
   gameButtons: {fileID: 406370855}
@@ -3177,6 +3179,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4354561166882404, guid: 9bc41a8d18c3dd243b9c2d0bd23d47bc, type: 3}
   m_PrefabInstance: {fileID: 686349514}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &691420613
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 691420614}
+  m_Layer: 0
+  m_Name: AusiliarGO1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &691420614
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 691420613}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2299.1985, y: 985.0537, z: 10230.676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &699799000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3485,6 +3518,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740959074}
   m_CullTransparentMesh: 1
+--- !u!1 &755605462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 755605463}
+  m_Layer: 0
+  m_Name: AusiliarGO2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &755605463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755605462}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2299.1985, y: 985.0537, z: 10230.676}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &774737503
 GameObject:
   m_ObjectHideFlags: 0
@@ -5068,14 +5132,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28cf03801de40ec49a7ea23c9c697d0f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  emptyuemptyAusiliarJumpGameObject: {fileID: 0}
+  ausiliarGO2Move: {fileID: 755605462}
   playerController: {fileID: 1188957499}
   groundCheckerGameObjectTransform: {fileID: 1494424084}
   groundMask:
     serializedVersion: 2
     m_Bits: 64
   fixedJoystickGameObject: {fileID: 824988416}
-  isGameDisactive: 0
 --- !u!1001 &1035795073
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8061,7 +8124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerBody: {fileID: 1188957500}
   fixedJoystickGameObject: {fileID: 824988416}
-  isGameDisactive: 0
+  ausiliarGO1Look: {fileID: 691420613}
 --- !u!1001 &1514866740
 PrefabInstance:
   m_ObjectHideFlags: 0

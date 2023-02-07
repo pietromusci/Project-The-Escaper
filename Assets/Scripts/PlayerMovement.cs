@@ -25,40 +25,45 @@ public class PlayerMovement : MonoBehaviour
 
     //end game variables 
     private int ausiliarCoroutineVariable = 0;
+
+    public bool isGameDisactive;
     // Update is called once per frame
     void Update()
     {
-        //                    |sphere creation|     |position of sphere|               |radius of sphere||check if the sphere is collided to the ground|
-        isPlayerGrounded = Physics.CheckSphere(groundCheckerGameObjectTransform.position, groundDistance, groundMask);
-
-        //verify if the player is on ground and if the pod of velocity of falling down is less than 0.
-        if((isPlayerGrounded==true) && (velocity.y< 0))
+        if (isGameDisactive == false) 
         {
-            velocity.y = -2.0f; //it will set the pos of velocity's vector to -2.
+            //                    |sphere creation|     |position of sphere|               |radius of sphere||check if the sphere is collided to the ground|
+            isPlayerGrounded = Physics.CheckSphere(groundCheckerGameObjectTransform.position, groundDistance, groundMask);
 
-        }
-        //get the axis of the movement.
-        xPositionTransform = fixedJoystickGameObject.Horizontal; //we take the input horizontal axis taken from the joystick.
-        zPositionTransform = fixedJoystickGameObject.Vertical;   //we take the input vertical axis taken from the joystick.
-        //direction that we want to do. this is a sum of vectors 
-        Vector3 movementPosition = transform.right * xPositionTransform + transform.forward * zPositionTransform;
-        //this line of code will do the movement of the player,having the 'movementposition' vector(that have the values of the direction that we want to do).
-        //this vector is molitiplied by speed.
-        playerController.Move(movementPosition * speedOfTheMovement); //this function can be used only with a charactercontroller object.
+            //verify if the player is on ground and if the pod of velocity of falling down is less than 0.
+            if ((isPlayerGrounded == true) && (velocity.y < 0))
+            {
+                velocity.y = -2.0f; //it will set the pos of velocity's vector to -2.
 
-        if ((isPlayerGrounded == true) && (Input.GetButtonDown("Jump")))  //condition that verify if the button (that use the jump force)is pressed and the player is on ground.
-        {
-            Debug.Log("done");
-            //velocity occurred for do the jump of the player
-            velocity.y = Mathf.Sqrt(jumpHeight * (-2.0f * gravityNumber)); //square root (formule of a jump).
-        }
-        velocity.y += gravityNumber * Time.deltaTime; //we apply the gravity force to the y value of transform position of the playercontroller.
-        //in this line of code there's the function that apply the gravity to the player gameobject.
-        playerController.Move(velocity * Time.deltaTime);
+            }
+            //get the axis of the movement.
+            xPositionTransform = fixedJoystickGameObject.Horizontal; //we take the input horizontal axis taken from the joystick.
+            zPositionTransform = fixedJoystickGameObject.Vertical;   //we take the input vertical axis taken from the joystick.
+                                                                     //direction that we want to do. this is a sum of vectors 
+            Vector3 movementPosition = transform.right * xPositionTransform + transform.forward * zPositionTransform;
+            //this line of code will do the movement of the player,having the 'movementposition' vector(that have the values of the direction that we want to do).
+            //this vector is molitiplied by speed.
+            playerController.Move(movementPosition * speedOfTheMovement); //this function can be used only with a charactercontroller object.
 
-        if (ausiliarCoroutineVariable == 1)
-        {
-            SceneManager.LoadScene(2);
+            if ((isPlayerGrounded == true) && (Input.GetButtonDown("Jump")))  //condition that verify if the button (that use the jump force)is pressed and the player is on ground.
+            {
+                Debug.Log("done");
+                //velocity occurred for do the jump of the player
+                velocity.y = Mathf.Sqrt(jumpHeight * (-2.0f * gravityNumber)); //square root (formule of a jump).
+            }
+            velocity.y += gravityNumber * Time.deltaTime; //we apply the gravity force to the y value of transform position of the playercontroller.
+                                                          //in this line of code there's the function that apply the gravity to the player gameobject.
+            playerController.Move(velocity * Time.deltaTime);
+
+            if (ausiliarCoroutineVariable == 1)
+            {
+                SceneManager.LoadScene(2);
+            }
         }
     }
 

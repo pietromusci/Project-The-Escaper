@@ -55,7 +55,7 @@ public class GrabbingObject : MonoBehaviour
         doorBunkerMissingKeyText.gameObject.SetActive(rejectedTransition);  doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition);
         keyIconImage.gameObject.SetActive(rejectedTransition);  keyGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         lightTorchGameObject.gameObject.SetActive(rejectedTransition);
-        iconBatteryOfTheFlashlight.gameObject.SetActive(rejectedTransition); batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
+       batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
     }
 
@@ -124,7 +124,7 @@ public class GrabbingObject : MonoBehaviour
                 {
                     secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
                 }
-                else if (ausiliarVarBunkerDoor == 0) //this condition verify if the player is opening the first of the second door of the bunker. 
+                else if ((ausiliarVarBunkerDoor == 0) && (areDoorsFixed == false)) //this condition verify if the player is opening the first of the second door of the bunker. 
                 {
                     firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
                     StartCoroutine(FixingDoorBug());
@@ -133,8 +133,9 @@ public class GrabbingObject : MonoBehaviour
                 doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
                 keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
                 StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
+                isKeyGrabbedToThePlayer = false;
             }
-            else if ((isKeyGrabbedToThePlayer == false))   //if the player doesn't have the key 
+            else  //if the player doesn't have the key 
             {
                 doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
                 StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine

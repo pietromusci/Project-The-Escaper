@@ -7,22 +7,27 @@ using TMPro;
 
 public class GameManager1 : MonoBehaviour
 {
+    public int levelNumber = 0;
     //declaration variables.
     private bool isCoroutineEnded = false;
     private bool ausiliarVariable = false;
-
+    private bool isFailureCoroutineEnded = false;
     //declaration gameobjects's variables 
     [SerializeField] private GameObject loadingSubScene;  //loading screen. 
     [SerializeField] private GameObject gameButtons; //buttons in the menu.
 
     //variables that are used for the countdown.
     [SerializeField] private TextMeshProUGUI countdownTextUI;
-    private float valueTimeForCountdown= 300.00f;  //varibale that is used for slides the time how the reality.
+    [SerializeField] private TextMeshProUGUI failureLevelAdviseUI;
+    private float valueTimeForCountdown= 10.00f;  //varibale that is used for slides the time how the reality.
     public bool isGameEnded;  //boolean that verify if the timer is expired(scaduto).
 
+    public PlayerMovement playerMovementScriptGO;
+    public LookAroundScript lookAroundScriptGO;
     // Start is called before the first frame update.
     void Start()
     {
+        failureLevelAdviseUI.gameObject.SetActive(false);
         //set the loading subscene to active
         loadingSubScene.gameObject.SetActive(true);
         //start the 3 seconds of coroutine, where there's the loading subscene sected to active. 
@@ -38,13 +43,13 @@ public class GameManager1 : MonoBehaviour
             countdownTextUI.gameObject.SetActive(true);   //the timer is actived.
             ausiliarVariable = true;  //value of this variable is setted to true for not check again the condition.
         }
-         
+
         if (isCoroutineEnded != false) //if the loading sub-scene is complete, this part of script make time(used for the timer) pass. 
         {
-            if(valueTimeForCountdown>0) //if the time(in deltatime value) is major than zero
+            if (valueTimeForCountdown > 0) //if the time(in deltatime value) is major than zero
             {
                 valueTimeForCountdown = (valueTimeForCountdown - Time.deltaTime);  //the time will slide.
-            } 
+            }
             else if (valueTimeForCountdown < 0) //if the value is less than 0, the value of the time is setted to zero(0).
             {
                 valueTimeForCountdown = 0.00f; //the time will set to zero.
@@ -52,6 +57,10 @@ public class GameManager1 : MonoBehaviour
             DisplayTimeCountdownFunction(valueTimeForCountdown); //call of the function
         }
 
+        if (isFailureCoroutineEnded == true)
+        {
+            SceneManager.LoadScene(levelNumber);
+        }
     }
 
     //function that return 3 seconds of waiting for the coroutine.
@@ -79,8 +88,19 @@ public class GameManager1 : MonoBehaviour
             if ((secondsOfCountdown == 0) && (isGameEnded != true)) //if the timer is arrived to 0 seconds remaining
             {
                 isGameEnded = true;  //the boolean value that verify that the timer is expired(scaduto) will changed to tue.
+                StartCoroutine(FailureLevelCoroutine());
+                failureLevelAdviseUI.gameObject.SetActive(true);
+                Debug.Log("il tenpo è scaduto, riprova!");
+                playerMovementScriptGO.isGameDisactive = true;
+                lookAroundScriptGO.isGameDisactive = true;
+                Debug.Log(playerMovementScriptGO.isGameDisactive); Debug.Log(lookAroundScriptGO.isGameDisactive);
             }
         }
+    }
 
+    private IEnumerator FailureLevelCoroutine()
+    {
+        yield return new WaitForSeconds(7.5f);
+        isFailureCoroutineEnded = true;
     }
 }

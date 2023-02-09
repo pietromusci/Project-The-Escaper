@@ -7,10 +7,10 @@ using UnityEditor.Animations;
 
 public class GrabbingObject : MonoBehaviour
 {
-    //variable that is used to have the count of the actual batteries.
-    private int numberOfActualBatteries = 0;
-    private int ausiliarVarBunkerDoor = 0;
-    private bool areDoorsFixed = false;
+    //battery variables.
+    private int numberOfActualBatteries = 0; //variable that is used to have the count of the actual batteries. 
+    private bool isBatteryStarted = false;
+    [SerializeField] private GameObject timerAusiliarGOLengthLifeOfBattery;
     //ausiliar variable for identify the drawers
     private int ausiliarVariableForIdentification;
     private int[] ausiliarDrawerVar = { 0, 0, 0, 0 };
@@ -33,6 +33,10 @@ public class GrabbingObject : MonoBehaviour
     private bool isBatteryTurnedOff = false; //boolean where's contained the information about the grab or not of the battery.
     private bool isBatteryGrabbed = false;
     private bool hasAlreadyBatteryText = false;
+
+    //door bug variables.
+    private int ausiliarVarBunkerDoor = 0; //ausiliar variable that is used for
+    private bool areDoorsFixed = false; //variable that is used for resolve a fix of the door. 
 
     //texts and images variables 
     [SerializeField] private TextMeshProUGUI doorBunkerOpeningTextAdvise;  //variable where's contained the text "Complimenti!Hai aperto il bunker!".
@@ -100,6 +104,11 @@ public class GrabbingObject : MonoBehaviour
         {
             alreadyHasTheBatteryTextAdvise.gameObject.SetActive(true); //the text that inform the player who has got already the battery is sected to inactive.
             hasAlreadyBatteryText = false;
+        }
+
+        if (isBatteryStarted == true) //if the battery is insert in the torch
+        {
+            timerAusiliarGOLengthLifeOfBattery.gameObject.SetActive(acceptedTransition); //the ausiliar gameobject is actived for verifiy to "batteryiconscript" that the coroutine is started.
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -180,7 +189,6 @@ public class GrabbingObject : MonoBehaviour
             numberOfActualBatteries++;
             StartCoroutine(LengthLifeOfTheBatteryCoroutine());
             lightTorchGameObject.gameObject.SetActive(true);
-            // iconBatteryOfTheFlashlight.gameObject.SetActive(true);
             batteryGrabbedTextAdvise. gameObject.SetActive(true);
             StartCoroutine(TimeOfViewingGrabBatteryText());
             Debug.Log("the battery is in the inventory");
@@ -245,8 +253,10 @@ public class GrabbingObject : MonoBehaviour
     //this function is used for get 150 second of waiting before the battery turns off.
     private IEnumerator LengthLifeOfTheBatteryCoroutine()
     {
-        yield return (new WaitForSeconds(150.0f)); //150 seconds for turns off the battery selected.
+        isBatteryStarted = true;
+        yield return (new WaitForSeconds(180.0f)); //150 seconds for turns off the battery selected.
         isBatteryTurnedOff = true;
+        isBatteryStarted = false;
     }
 
     //this funtion is used for get 5 second of waiting for reading the grab battery text.

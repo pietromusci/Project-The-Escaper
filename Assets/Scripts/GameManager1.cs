@@ -25,8 +25,6 @@ public class GameManager1 : MonoBehaviour
     private float valueTimeForCountdown= 300.00f;  //varibale that is used for slides the time how the reality.
     public bool isGameEnded;  //boolean that verify if the timer is expired(scaduto).
 
-    public PlayerMovement playerMovementScriptGO;
-    public LookAroundScript lookAroundScriptGO;
     // Start is called before the first frame update.
     void Start()
     {

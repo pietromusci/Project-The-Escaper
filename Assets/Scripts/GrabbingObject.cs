@@ -151,30 +151,30 @@ public class GrabbingObject : MonoBehaviour
             }
         }
 
-        if ((other.gameObject.CompareTag("SingleDrawerGameObject")) && (ausiliarVariableForIdentification != 0)) //if the player's approaching at one of the drawers
+        if ((other.gameObject.CompareTag("SingleDrawerGameObject")) ) //if the player's approaching at one of the drawers
         {
-            if ((other.gameObject.name == ("Drawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
+            if ((other.gameObject.name == ("TriggererDrawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
             {
                 ausiliarVariableForIdentification = 0; //ausiliar.
                 Debug.Log("first");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
             }
-            else if ((other.gameObject.name == ("Drawer2")) && (ausiliarDrawerVar[1] == 0)) //if the player's approaching at the second of the drawers and it isn't already opened
+            else if ((other.gameObject.name == ("TriggererDrawer2")) && (ausiliarDrawerVar[1] == 0)) //if the player's approaching at the second of the drawers and it isn't already opened
             {
                 ausiliarVariableForIdentification = 1; //ausiliar.
                 Debug.Log("second");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
             }
-            else if ((other.gameObject.name == ("Drawer3")) && (ausiliarDrawerVar[2] == 0)) //if the player's approaching at the third of the drawers and it isn't already opened
+            else if ((other.gameObject.name == ("TriggererDrawer3")) && (ausiliarDrawerVar[2] == 0)) //if the player's approaching at the third of the drawers and it isn't already opened
             {
                 ausiliarVariableForIdentification = 2; //ausiliar.
                 Debug.Log("third");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
             }
-            else if ((other.gameObject.name == ("Drawer4")) && (ausiliarDrawerVar[3] == 0)) //if the player's approaching at the fourth of the drawers and it isn't already opened
+            else if ((other.gameObject.name == ("TriggererDrawer4")) && (ausiliarDrawerVar[3] == 0)) //if the player's approaching at the fourth of the drawers and it isn't already opened
             {
                 ausiliarVariableForIdentification = 3; //ausiliar.
                 Debug.Log("fourth");
@@ -208,10 +208,12 @@ public class GrabbingObject : MonoBehaviour
         if (areDrawersOpened[ausiliarVariableForIdentification] == false)
         {
             DrawersOpeningAndClosingAnimator[ausiliarVariableForIdentification].SetBool("IsDrawerOpened", acceptedTransition); //in this line of code,we set the "IsDrawerOpened" parameter(created in the animator controller) to true.
+            areDrawersOpened[ausiliarVariableForIdentification]= !areDrawersOpened[ausiliarVariableForIdentification] ;
         }
         else if (areDrawersOpened[ausiliarVariableForIdentification] == true)
         {
             DrawersOpeningAndClosingAnimator[ausiliarVariableForIdentification].SetBool("CanBeClosedParameter", acceptedTransition); //in this line of code,we set the "CanBeClosedParameter" parameter(created in the animator controller) to true.
+            areDrawersOpened[ausiliarVariableForIdentification] = !areDrawersOpened[ausiliarVariableForIdentification];
         }
     }
 
@@ -269,6 +271,7 @@ public class GrabbingObject : MonoBehaviour
     //this function is used for get 4 seconds of waiting for reading the "has already the battery" text. 
     private IEnumerator HasAlreadyTheBatteryCoroutine()
     {
+
         yield return (new WaitForSeconds(4.0f)); //4 seconds for read the text that inform the player who has got already the battery.
         hasAlreadyBatteryText = true;
     }

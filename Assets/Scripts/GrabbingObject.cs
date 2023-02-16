@@ -7,10 +7,14 @@ using UnityEditor.Animations;
 
 public class GrabbingObject : MonoBehaviour
 {
+    //ausiliar GameObject
+    [SerializeField] private GameObject counterClickerButtonAusiliarVar;
+
     //battery variables.
     private int numberOfActualBatteries = 0; //variable that is used to have the count of the actual batteries. 
     private bool isBatteryStarted = false;
     [SerializeField] private GameObject timerAusiliarGOLengthLifeOfBattery;
+
     //ausiliar variable for identify the drawers
     private int ausiliarVariableForIdentification;
     private int[] ausiliarDrawerVar = { 0, 0, 0, 0 };
@@ -22,7 +26,6 @@ public class GrabbingObject : MonoBehaviour
 
     //lights of the flashlight gameobject variable.
     [SerializeField] private GameObject lightTorchGameObject; //variable where's contained the light of the torch.
-    [SerializeField] private Image iconBatteryOfTheFlashlight;
 
     //booleans values
     private bool isKeyGrabbedToThePlayer = false;  //boolean where is contained the information about the grab or not of the key.
@@ -46,9 +49,6 @@ public class GrabbingObject : MonoBehaviour
     [SerializeField] private TextMeshProUGUI batteryGrabbedTextAdvise; //variable where's contained the text "Hai appena raccolto una batteria per la torcia".
     [SerializeField] private TextMeshProUGUI alreadyHasTheBatteryTextAdvise; //variable where's contained the text "Non puoi raccogliere la batteria,ne hai già una inserita nella torcia!".
 
-    //buttons variables
-    [SerializeField] private Button clickerButtonVariable; //clicker button. 
-
     //static boolean values.
     private static bool acceptedTransition = true; //this static variable is sected to true value and is utilised only for active the gameobjects.
     private static bool rejectedTransition = false; //this static variable is sected to false value and is utilised only for active the gameobjects.
@@ -59,7 +59,7 @@ public class GrabbingObject : MonoBehaviour
         doorBunkerMissingKeyText.gameObject.SetActive(rejectedTransition);  doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition);
         keyIconImage.gameObject.SetActive(rejectedTransition);  keyGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         lightTorchGameObject.gameObject.SetActive(rejectedTransition);
-       batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
+        batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
     }
 
@@ -89,7 +89,6 @@ public class GrabbingObject : MonoBehaviour
         if (isBatteryTurnedOff != false)  //if the LengthLifeOfTheBatteryCoroutine coroutine is ended.
         {
             lightTorchGameObject.gameObject.SetActive(false); //turns off the light
-            iconBatteryOfTheFlashlight.gameObject.SetActive(false);
             numberOfActualBatteries--;
             isBatteryTurnedOff = false;
         }
@@ -113,7 +112,7 @@ public class GrabbingObject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.gameObject.CompareTag("Key")))   //if the player's approaching at the key.
+        if ((other.gameObject.CompareTag("Key")) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true))   //if the player's approaching at the key.
         {
             other.gameObject.SetActive(rejectedTransition); //disactive the key gameobject.
             Destroy(other.gameObject); //destroy the key gameobject.
@@ -123,6 +122,7 @@ public class GrabbingObject : MonoBehaviour
                 keyGrabbedTextAdvise.gameObject.SetActive(acceptedTransition); // the text that inform the player whop has grabbed the key is sected to active.
                 StartCoroutine(TimeOfViewingKeyText()); //start of 5 second of coroutine. 
             }
+            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
         }
 
         if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
@@ -151,7 +151,7 @@ public class GrabbingObject : MonoBehaviour
             }
         }
 
-        if ((other.gameObject.CompareTag("SingleDrawerGameObject")) ) //if the player's approaching at one of the drawers
+        if ((other.gameObject.CompareTag("SingleDrawerGameObject")) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true)) //if the player's approaching at one of the drawers
         {
             if ((other.gameObject.name == ("TriggererDrawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
             {
@@ -159,6 +159,7 @@ public class GrabbingObject : MonoBehaviour
                 Debug.Log("first");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
             }
             else if ((other.gameObject.name == ("TriggererDrawer2")) && (ausiliarDrawerVar[1] == 0)) //if the player's approaching at the second of the drawers and it isn't already opened
             {
@@ -166,6 +167,7 @@ public class GrabbingObject : MonoBehaviour
                 Debug.Log("second");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
             }
             else if ((other.gameObject.name == ("TriggererDrawer3")) && (ausiliarDrawerVar[2] == 0)) //if the player's approaching at the third of the drawers and it isn't already opened
             {
@@ -173,6 +175,7 @@ public class GrabbingObject : MonoBehaviour
                 Debug.Log("third");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
             }
             else if ((other.gameObject.name == ("TriggererDrawer4")) && (ausiliarDrawerVar[3] == 0)) //if the player's approaching at the fourth of the drawers and it isn't already opened
             {
@@ -180,10 +183,11 @@ public class GrabbingObject : MonoBehaviour
                 Debug.Log("fourth");
                 OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
                 SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
             }
         }
 
-        if ((other.gameObject.CompareTag("Battery")) && (numberOfActualBatteries < 1)) //if the player's approaching at one of the battery and the player doesn't have another of it
+        if ((other.gameObject.CompareTag("Battery")) && (numberOfActualBatteries < 1) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true)) //if the player's approaching at one of the battery and the player doesn't have another of it
         {
             Destroy(other.gameObject);
             numberOfActualBatteries++;
@@ -192,13 +196,18 @@ public class GrabbingObject : MonoBehaviour
             batteryGrabbedTextAdvise. gameObject.SetActive(true);
             StartCoroutine(TimeOfViewingGrabBatteryText());
             Debug.Log("the battery is in the inventory");
+            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
         }
         else if (other.gameObject.CompareTag("Battery") && (numberOfActualBatteries != 0)) //else if the player has already the battery in the flashlight.
         {
             alreadyHasTheBatteryTextAdvise.gameObject.SetActive(true); //the text that inform the player who has got already the battery is sected to active.
             StartCoroutine(HasAlreadyTheBatteryCoroutine()); //start of the coroutine of 4 seconds for read the text. 
+            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
         }
-        
+
+        counterClickerButtonAusiliarVar.gameObject.SetActive(false);
+
+
     }
 
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).

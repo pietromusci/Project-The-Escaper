@@ -7,6 +7,9 @@ using TMPro;
 
 public class GameManager1 : MonoBehaviour
 {
+    //this variable is used for take the count of the click of the main button.
+    [SerializeField] private GameObject counterClickerButtonAusiliarVar;
+    //ausiliar gameobjects.
     [SerializeField] private GameObject ausiliarGO1Look; //gameobject used for block the camera movement. 
     [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
 
@@ -102,5 +105,12 @@ public class GameManager1 : MonoBehaviour
     {
         yield return new WaitForSeconds(10.0f);
         isFailureCoroutineEnded = true;
+    }
+
+    public void OnClickEnterButtonMainFunction()
+    {
+       
+        counterClickerButtonAusiliarVar.gameObject.SetActive(true);
+        Debug.Log("is clicked");
     }
 }

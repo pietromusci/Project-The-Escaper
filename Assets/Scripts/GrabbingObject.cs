@@ -53,14 +53,17 @@ public class GrabbingObject : MonoBehaviour
     private static bool acceptedTransition = true; //this static variable is sected to true value and is utilised only for active the gameobjects.
     private static bool rejectedTransition = false; //this static variable is sected to false value and is utilised only for active the gameobjects.
 
+    //transform variables.
+    [SerializeField] private GameObject ausiliarTeleportGO1; //variable where's contained the information about the position of the player.
+    private bool ausiliarLevel2TeleportGO; //ausiliar variable that inform the script if the player is situated in the second level.
     // Start function is called before the first frame update.(MAIN)
     private void Start()
     {
-        doorBunkerMissingKeyText.gameObject.SetActive(rejectedTransition);  doorBunkerOpeningTextAdvise.gameObject.SetActive(rejectedTransition);
         keyIconImage.gameObject.SetActive(rejectedTransition);  keyGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         lightTorchGameObject.gameObject.SetActive(rejectedTransition);
         batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
+
     }
 
     // Update function is called once per frame(MAIN2)
@@ -110,6 +113,7 @@ public class GrabbingObject : MonoBehaviour
             timerAusiliarGOLengthLifeOfBattery.gameObject.SetActive(acceptedTransition); //the ausiliar gameobject is actived for verifiy to "batteryiconscript" that the coroutine is started.
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if ((other.gameObject.CompareTag("Key")) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true))   //if the player's approaching at the key.
@@ -205,6 +209,12 @@ public class GrabbingObject : MonoBehaviour
             counterClickerButtonAusiliarVar.gameObject.SetActive(false);
         }
 
+        if (other.gameObject.CompareTag("ExitFirstHouseLevel2") && (isKeyGrabbedToThePlayer == true)) //if the player has the key to open the first door of level2
+        {
+            ausiliarTeleportGO1.gameObject.SetActive(true);
+            isKeyGrabbedToThePlayer = false;
+            keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
+        }
         counterClickerButtonAusiliarVar.gameObject.SetActive(false);
 
 
@@ -243,14 +253,14 @@ public class GrabbingObject : MonoBehaviour
     //this function is used for get 3 second of waiting before the text is disabled.
     private IEnumerator TimeOfViewingKeyText()
     {
-        yield return (new WaitForSeconds(3.5f));  //3 seconds for read the text that inform the player whop has grabbed the key.
+        yield return (new WaitForSeconds(2.5f));  //3 seconds for read the text that inform the player whop has grabbed the key.
         isKeyCoroutineEnded = true;
     }    
     
     //this function is used for get 5 second of waiting before the text is disabled.
     private IEnumerator TimeOfViewingMissingKeyText()
     {
-        yield return (new WaitForSeconds(5.0f));  //5 seconds for read the text that inform the player who doesnt't have the key for open the door of the bunker.
+        yield return (new WaitForSeconds(4.0f));  //4 seconds for read the text that inform the player who doesnt't have the key for open the door of the bunker.
         isKeyMissingCoroutineEnded = true;
     }
 

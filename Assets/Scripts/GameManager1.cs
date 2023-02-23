@@ -7,28 +7,31 @@ using TMPro;
 
 public class GameManager1 : MonoBehaviour
 {
-    private string nameOftheCurrentScene;
-    private static string nameFirstLevelScene = "Level1";
-    private static string nameSecondLevelScene = "Level2";
+    //variables that are used for identify the actual level scene.  
+    private string nameOftheCurrentScene; //in this variable we get the name of the current scene 
+    private static string nameFirstLevelScene = "Level1"; //variable that is used to compare the "nameOfTheCurrentScene" to the first level scene
+    private static string nameSecondLevelScene = "Level2"; //variable that is used to compare the "nameOfTheCurrentScene" to the second level scene
 
     //this variable is used for take the count of the click of the main button.
     [SerializeField] private GameObject counterClickerButtonAusiliarVar;
+
     //ausiliar gameobjects.
     [SerializeField] private GameObject ausiliarGO1Look; //gameobject used for block the camera movement. 
     [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
 
-    public int levelNumber = 0;
     //declaration variables.
-    private bool isCoroutineEnded = false;
-    private bool ausiliarVariable = false;
-    private bool isFailureCoroutineEnded = false;
+    private  int levelNumber = 0; //this variable is used to identify the level and load the scene of the relative level if the time ends. 
+    private bool isCoroutineEnded = false; //boolean that verify that the time of loading of the icon is ended.
+    private bool ausiliarVariable = false; //ausiliar boolean that is used in the "Update Method" for verify only one time a  if state(this code set active some gameobject).
+    private bool isFailureCoroutineEnded = false; //boolean that verify that the timer is ended(zero value). 
+
     //declaration gameobjects's variables 
-    [SerializeField] private GameObject loadingSubScene;  //loading screen. 
-    [SerializeField] private GameObject gameButtons; //buttons in the menu.
+    [SerializeField] private GameObject loadingSubScene;  //loading screen gameobject. 
+    [SerializeField] private GameObject gameButtons; //buttons in the menu gameobjects.
 
     //variables that are used for the countdown.
-    [SerializeField] private TextMeshProUGUI countdownTextUI;
-    [SerializeField] private TextMeshProUGUI failureLevelAdviseUI;
+    [SerializeField] private TextMeshProUGUI countdownTextUI; //countdown timer text.
+    [SerializeField] private TextMeshProUGUI failureLevelAdviseUI; //end countdown timer text advise.
     private float valueTimeForCountdown;  //variable that contain the value in seconds of the timer and it is used for slides the time how the reality.
     public bool isGameEnded;  //boolean that verify if the timer is expired(scaduto).
 
@@ -44,11 +47,13 @@ public class GameManager1 : MonoBehaviour
         nameOftheCurrentScene = SceneManager.GetActiveScene().name; //get the name of the current active scene.
         if(nameOftheCurrentScene == nameFirstLevelScene) //if the scene is Level1
         {
-            valueTimeForCountdown = 299.00f; //set the start value of the timer to 5 minutes. 
+            valueTimeForCountdown = 299.00f; //set the start value of the timer to 5 minutes.
+            levelNumber = 1;
         }
         else if(nameOftheCurrentScene ==nameSecondLevelScene) //if the scene is Level2
         {
             valueTimeForCountdown = 599.00f; //set the start value of the timer to 10 minutes.
+            levelNumber = 2;
         }
     }
     private void Update()
@@ -123,7 +128,6 @@ public class GameManager1 : MonoBehaviour
 
     public void OnClickEnterButtonMainFunction()
     {
-       
         counterClickerButtonAusiliarVar.gameObject.SetActive(true);
         Debug.Log("is clicked");
     }

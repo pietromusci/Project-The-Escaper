@@ -7,6 +7,10 @@ using TMPro;
 
 public class GameManager1 : MonoBehaviour
 {
+    private string nameOftheCurrentScene;
+    private static string nameFirstLevelScene = "Level1";
+    private static string nameSecondLevelScene = "Level2";
+
     //this variable is used for take the count of the click of the main button.
     [SerializeField] private GameObject counterClickerButtonAusiliarVar;
     //ausiliar gameobjects.
@@ -25,7 +29,7 @@ public class GameManager1 : MonoBehaviour
     //variables that are used for the countdown.
     [SerializeField] private TextMeshProUGUI countdownTextUI;
     [SerializeField] private TextMeshProUGUI failureLevelAdviseUI;
-    private float valueTimeForCountdown= 300.00f;  //varibale that is used for slides the time how the reality.
+    private float valueTimeForCountdown;  //variable that contain the value in seconds of the timer and it is used for slides the time how the reality.
     public bool isGameEnded;  //boolean that verify if the timer is expired(scaduto).
 
     // Start is called before the first frame update.
@@ -36,6 +40,16 @@ public class GameManager1 : MonoBehaviour
         loadingSubScene.gameObject.SetActive(true);
         //start the 3 seconds of coroutine, where there's the loading subscene sected to active. 
         StartCoroutine(LoadingCoroutine());
+
+        nameOftheCurrentScene = SceneManager.GetActiveScene().name; //get the name of the current active scene.
+        if(nameOftheCurrentScene == nameFirstLevelScene) //if the scene is Level1
+        {
+            valueTimeForCountdown = 299.00f; //set the start value of the timer to 5 minutes. 
+        }
+        else if(nameOftheCurrentScene ==nameSecondLevelScene) //if the scene is Level2
+        {
+            valueTimeForCountdown = 599.00f; //set the start value of the timer to 10 minutes.
+        }
     }
     private void Update()
     {

@@ -56,7 +56,6 @@ public class GrabbingObject : MonoBehaviour
 
     //transform variables.
     [SerializeField] private GameObject ausiliarTeleportGO1; //variable where's contained the information about the position of the player.
-    private bool ausiliarLevel2TeleportGO; //ausiliar variable that inform the script if the player is situated in the second level.
     // Start function is called before the first frame update.(MAIN)
     private void Start()
     {
@@ -114,116 +113,123 @@ public class GrabbingObject : MonoBehaviour
             timerAusiliarGOLengthLifeOfBattery.gameObject.SetActive(acceptedTransition); //the ausiliar gameobject is actived for verifiy to "batteryiconscript" that the coroutine is started.
         }
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (counterClickerButtonAusiliarVar.gameObject.activeSelf == true)
+        {
+            //key grab code part of the script.
+            if ((other.gameObject.CompareTag("Key")))   //if the player's approaching at the key.
+            {
+                other.gameObject.SetActive(rejectedTransition); //disactive the key gameobject.
+                Destroy(other.gameObject); //destroy the key gameobject.
+                isKeyGrabbedToThePlayer = true; //set true value for this variable(that is used to verify a lot of thing afterwards).
+                if (isKeyGrabbedToThePlayer == true)
+                {
+                    keyGrabbedTextAdvise.gameObject.SetActive(acceptedTransition); // the text that inform the player whop has grabbed the key is sected to active.
+                    StartCoroutine(TimeOfViewingKeyText()); //start of 5 second of coroutine. 
+                }
+            }
 
+            //battery grab code part of the script.
+            else if ((other.gameObject.CompareTag("Battery"))) //if the player's approaching at one of the battery and the player doesn't have another of it
+            {
+                if (numberOfActualBatteries < 1)
+                {
+                    Destroy(other.gameObject);
+                    numberOfActualBatteries++;
+                    StartCoroutine(LengthLifeOfTheBatteryCoroutine());
+                    lightTorchGameObject.gameObject.SetActive(true);
+                    batteryGrabbedTextAdvise.gameObject.SetActive(true);
+                    StartCoroutine(TimeOfViewingGrabBatteryText());
+                    Debug.Log("the battery is in the inventory");
+                }
+                else if (numberOfActualBatteries != 0) //else if the player has already the battery in the flashlight.
+                {
+                    alreadyHasTheBatteryTextAdvise.gameObject.SetActive(true); //the text that inform the player who has got already the battery is sected to active.
+                    StartCoroutine(HasAlreadyTheBatteryCoroutine()); //start of the coroutine of 4 seconds for read the text. 
+
+                }
+            }
+
+            //drawers grab code part of the script.
+            else if (other.gameObject.CompareTag("SingleDrawerGameObject")) //if the player's approaching at one of the drawers
+            {
+                if ((other.gameObject.name == ("TriggererDrawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
+                {
+                    ausiliarVariableForIdentification = 0; //ausiliar.
+                    Debug.Log("first");
+                    OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+                    SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+
+                }
+                else if ((other.gameObject.name == ("TriggererDrawer2")) && (ausiliarDrawerVar[1] == 0)) //if the player's approaching at the second of the drawers and it isn't already opened
+                {
+                    ausiliarVariableForIdentification = 1; //ausiliar.
+                    Debug.Log("second");
+                    OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+                    SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+
+                }
+                else if ((other.gameObject.name == ("TriggererDrawer3")) && (ausiliarDrawerVar[2] == 0)) //if the player's approaching at the third of the drawers and it isn't already opened
+                {
+                    ausiliarVariableForIdentification = 2; //ausiliar.
+                    Debug.Log("third");
+                    OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+                    SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+
+                }
+                else if ((other.gameObject.name == ("TriggererDrawer4")) && (ausiliarDrawerVar[3] == 0)) //if the player's approaching at the fourth of the drawers and it isn't already opened
+                {
+                    ausiliarVariableForIdentification = 3; //ausiliar.
+                    Debug.Log("fourth");
+                    OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
+                    SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
+
+                }
+            }
+            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.gameObject.CompareTag("Key")) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true))   //if the player's approaching at the key.
-        {
-            other.gameObject.SetActive(rejectedTransition); //disactive the key gameobject.
-            Destroy(other.gameObject); //destroy the key gameobject.
-            isKeyGrabbedToThePlayer = true; //set true value for this variable(that is used to verify a lot of thing afterwards).
-            if (isKeyGrabbedToThePlayer == true)
+            if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
             {
-                keyGrabbedTextAdvise.gameObject.SetActive(acceptedTransition); // the text that inform the player whop has grabbed the key is sected to active.
-                StartCoroutine(TimeOfViewingKeyText()); //start of 5 second of coroutine. 
-            }
-            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-        }
-
-        if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
-        {
-            if ((isKeyGrabbedToThePlayer == true))  //if the player has the key 
-            {
-                if ((ausiliarVarBunkerDoor == 1) && (areDoorsFixed == true))
+                if ((isKeyGrabbedToThePlayer == true))  //if the player has the key 
                 {
-                    secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
+                    if ((ausiliarVarBunkerDoor == 1) && (areDoorsFixed == true))
+                    {
+                        secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
+                    }
+                    else if ((ausiliarVarBunkerDoor == 0) && (areDoorsFixed == false)) //this condition verify if the player is opening the first of the second door of the bunker. 
+                    {
+                        firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
+                        StartCoroutine(FixingDoorBug());
+                    }
+
+                    doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
+                    keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
+                    StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
+                    isKeyGrabbedToThePlayer = false;
                 }
-                else if ((ausiliarVarBunkerDoor == 0) && (areDoorsFixed == false)) //this condition verify if the player is opening the first of the second door of the bunker. 
+                else  //if the player doesn't have the key 
                 {
-                    firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
-                    StartCoroutine(FixingDoorBug());
+                    doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
+                    StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
                 }
+            }
 
-                doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
-                keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
-                StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
-                isKeyGrabbedToThePlayer = false;
-            }
-            else  //if the player doesn't have the key 
+            if (other.gameObject.CompareTag("ExitFirstHouseLevel2") && (isKeyGrabbedToThePlayer == true)) //if the player has the key to open the first door of level2
             {
-                doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
-                StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
+                if (isKeyCoroutineEndedAusiliar == true)
+                {
+                    ausiliarTeleportGO1.gameObject.SetActive(true);
+                    isKeyGrabbedToThePlayer = false;
+                    keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
+                }
             }
-        }
-
-        if ((other.gameObject.CompareTag("SingleDrawerGameObject")) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true)) //if the player's approaching at one of the drawers
-        {
-            if ((other.gameObject.name == ("TriggererDrawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
-            {
-                ausiliarVariableForIdentification = 0; //ausiliar.
-                Debug.Log("first");
-                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
-                SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
-                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-            }
-            else if ((other.gameObject.name == ("TriggererDrawer2")) && (ausiliarDrawerVar[1] == 0)) //if the player's approaching at the second of the drawers and it isn't already opened
-            {
-                ausiliarVariableForIdentification = 1; //ausiliar.
-                Debug.Log("second");
-                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
-                SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
-                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-            }
-            else if ((other.gameObject.name == ("TriggererDrawer3")) && (ausiliarDrawerVar[2] == 0)) //if the player's approaching at the third of the drawers and it isn't already opened
-            {
-                ausiliarVariableForIdentification = 2; //ausiliar.
-                Debug.Log("third");
-                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
-                SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
-                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-            }
-            else if ((other.gameObject.name == ("TriggererDrawer4")) && (ausiliarDrawerVar[3] == 0)) //if the player's approaching at the fourth of the drawers and it isn't already opened
-            {
-                ausiliarVariableForIdentification = 3; //ausiliar.
-                Debug.Log("fourth");
-                OpeningOrClosingParametersMethod(ausiliarVariableForIdentification);
-                SectedOpenOrCloseDrawer(ausiliarVariableForIdentification);
-                counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-            }
-        }
-
-        if ((other.gameObject.CompareTag("Battery")) && (numberOfActualBatteries < 1) && (counterClickerButtonAusiliarVar.gameObject.activeInHierarchy == true)) //if the player's approaching at one of the battery and the player doesn't have another of it
-        {
-            Destroy(other.gameObject);
-            numberOfActualBatteries++;
-            StartCoroutine(LengthLifeOfTheBatteryCoroutine());
-            lightTorchGameObject.gameObject.SetActive(true);
-            batteryGrabbedTextAdvise.gameObject.SetActive(true);
-            StartCoroutine(TimeOfViewingGrabBatteryText());
-            Debug.Log("the battery is in the inventory");
             counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-        }
-        else if (other.gameObject.CompareTag("Battery") && (numberOfActualBatteries != 0)) //else if the player has already the battery in the flashlight.
-        {
-            alreadyHasTheBatteryTextAdvise.gameObject.SetActive(true); //the text that inform the player who has got already the battery is sected to active.
-            StartCoroutine(HasAlreadyTheBatteryCoroutine()); //start of the coroutine of 4 seconds for read the text. 
-            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-        }
-
-        if (other.gameObject.CompareTag("ExitFirstHouseLevel2") && (isKeyGrabbedToThePlayer == true)) //if the player has the key to open the first door of level2
-        {
-            if (isKeyCoroutineEndedAusiliar == true)
-            {
-                ausiliarTeleportGO1.gameObject.SetActive(true);
-                isKeyGrabbedToThePlayer = false;
-                keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
-            }
-        }
-        counterClickerButtonAusiliarVar.gameObject.SetActive(false);
-
 
     }
-
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
     private void OpeningOrClosingParametersMethod(int numberOfDrawer)
     {

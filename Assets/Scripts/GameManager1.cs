@@ -128,7 +128,6 @@ public class GameManager1 : MonoBehaviour
 
     public void OnClickEnterButtonMainFunction()
     {
-        counterClickerButtonAusiliarVar.gameObject.SetActive(true);
-        Debug.Log("is clicked");
+        counterClickerButtonAusiliarVar.gameObject.SetActive(true); //ausiliar gameobject for the clicking is sected to true.
     }
 }

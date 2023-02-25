@@ -23,9 +23,6 @@ public class PlayerMovement : MonoBehaviour
     private float xPositionTransform = 0.0f; //x axis pos
     private float zPositionTransform = 0.0f; //z axis pos
 
-    //end game variables 
-    private int ausiliarCoroutineVariable = 0;
-
     // Update is called once per frame
     void Update()
     {
@@ -60,24 +57,6 @@ public class PlayerMovement : MonoBehaviour
                                                           //in this line of code there's the function that apply the gravity to the player gameobject.
             playerController.Move(velocity * Time.deltaTime);
 
-            if (ausiliarCoroutineVariable == 1)
-            {
-                SceneManager.LoadScene(2);
-            }
         }
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("EndLevel") && (isPlayerGrounded == true))
-        {
-            StartCoroutine(EndSceneCoroutineWait());
-        }
-    }
-
-    private IEnumerator EndSceneCoroutineWait()
-    {
-        yield return (new WaitForSeconds(10.00f));
-        ausiliarCoroutineVariable = 1;
     }
 }

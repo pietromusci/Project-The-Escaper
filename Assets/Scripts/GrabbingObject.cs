@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using UnityEditor.Animations;
 
 public class GrabbingObject : MonoBehaviour
 {
     //ausiliar GameObject
     [SerializeField] private GameObject counterClickerButtonAusiliarVar;
+    private int ausiliarCoroutineVariable = 0;
 
     //battery variables.
     private int numberOfActualBatteries = 0; //variable that is used to have the count of the actual batteries. 
@@ -49,13 +51,19 @@ public class GrabbingObject : MonoBehaviour
     [SerializeField] private TextMeshProUGUI keyGrabbedTextAdvise; //variable where's contained the text "Hai appena raccolto una chiave!Ora sta a te capire dove utilizzarla".
     [SerializeField] private TextMeshProUGUI batteryGrabbedTextAdvise; //variable where's contained the text "Hai appena raccolto una batteria per la torcia".
     [SerializeField] private TextMeshProUGUI alreadyHasTheBatteryTextAdvise; //variable where's contained the text "Non puoi raccogliere la batteria,ne hai già una inserita nella torcia!".
+    [SerializeField] private TextMeshProUGUI levelPassedTextAdvise; //variable where's contained the text "Hai superato il livello!".
 
     //static boolean values.
     private static bool acceptedTransition = true; //this static variable is sected to true value and is utilised only for active the gameobjects.
     private static bool rejectedTransition = false; //this static variable is sected to false value and is utilised only for active the gameobjects.
 
     //transform variables.
-    [SerializeField] private GameObject ausiliarTeleportGO1; //variable where's contained the information about the position of the player.
+    [SerializeField] private GameObject ausiliarTeleportGO1; //variable where's contained the information about the position of the player.LEVEL2 ONLY
+
+    //ausiliar gameobjects.
+    [SerializeField] private GameObject ausiliarGO1Look; //gameobject used for block the camera movement. 
+    [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
+
     // Start function is called before the first frame update.(MAIN)
     private void Start()
     {
@@ -63,6 +71,7 @@ public class GrabbingObject : MonoBehaviour
         lightTorchGameObject.gameObject.SetActive(rejectedTransition);
         batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
+        levelPassedTextAdvise.gameObject.SetActive(rejectedTransition);
 
     }
 
@@ -111,6 +120,11 @@ public class GrabbingObject : MonoBehaviour
         if (isBatteryStarted == true) //if the battery is insert in the torch
         {
             timerAusiliarGOLengthLifeOfBattery.gameObject.SetActive(acceptedTransition); //the ausiliar gameobject is actived for verifiy to "batteryiconscript" that the coroutine is started.
+        }
+
+        if (ausiliarCoroutineVariable == 1)
+        {
+            SceneManager.LoadScene(2);
         }
     }
     private void OnTriggerStay(Collider other)
@@ -227,7 +241,16 @@ public class GrabbingObject : MonoBehaviour
                     keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
                 }
             }
-            counterClickerButtonAusiliarVar.gameObject.SetActive(false);
+
+            //end level trigger
+            if (other.gameObject.CompareTag("EndLevel"))
+            {
+                Debug.Log("level passed");
+                levelPassedTextAdvise.gameObject.SetActive(true); //level passed advise text.
+                StartCoroutine(EndSceneCoroutineWait()); //starting of 6 seconds of coroutine.
+                ausiliarGO1Look.gameObject.SetActive(acceptedTransition); //block of the movement input from the player.
+                ausiliarGO2Move.gameObject.SetActive(acceptedTransition); //block of the looking visual input from the player.
+            }
 
     }
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
@@ -304,5 +327,12 @@ public class GrabbingObject : MonoBehaviour
 
         yield return (new WaitForSeconds(4.0f)); //4 seconds for read the text that inform the player who has got already the battery.
         hasAlreadyBatteryText = true;
+    }
+
+    //end scene coroutine.
+    private IEnumerator EndSceneCoroutineWait()
+    {
+        yield return (new WaitForSeconds(5.50f));
+        ausiliarCoroutineVariable = 1;
     }
 }

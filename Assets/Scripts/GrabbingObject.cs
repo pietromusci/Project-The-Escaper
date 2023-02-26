@@ -35,7 +35,7 @@ public class GrabbingObject : MonoBehaviour
     private bool isKeyCoroutineEndedAusiliar = false;
     private bool isKeyMissingCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingMissingKeyText coroutine.
     private bool isBunkerDoorOpeningCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingOpeningDoorBunkerText coroutine.
-    private bool[] areDrawersOpened = { false, false, false, false }; //booleans where are contained the informations about the drawers,if they are open or not.
+    [SerializeField] bool[] areDrawersOpened = { false, false, false, false }; //booleans where are contained the informations about the drawers,if they are open or not.
     private bool isBatteryTurnedOff = false; //boolean where's contained the information about the grab or not of the battery.
     private bool isBatteryGrabbed = false;
     private bool hasAlreadyBatteryText = false;
@@ -145,9 +145,10 @@ public class GrabbingObject : MonoBehaviour
             }
 
             //battery grab code part of the script.
-            else if ((other.gameObject.CompareTag("Battery"))) //if the player's approaching at one of the battery and the player doesn't have another of it
+             if (other.gameObject.CompareTag("Battery")) //if the player's approaching at one of the battery and the player doesn't have another of it
             {
-                if (numberOfActualBatteries < 1)
+                Debug.Log("ready");
+                if ((numberOfActualBatteries < 1))
                 {
                     Destroy(other.gameObject);
                     numberOfActualBatteries++;
@@ -166,7 +167,7 @@ public class GrabbingObject : MonoBehaviour
             }
 
             //drawers grab code part of the script.
-            else if (other.gameObject.CompareTag("SingleDrawerGameObject")) //if the player's approaching at one of the drawers
+             if (other.gameObject.CompareTag("SingleDrawerGameObject")) //if the player's approaching at one of the drawers
             {
                 if ((other.gameObject.name == ("TriggererDrawer1")) && (ausiliarDrawerVar[0] == 0)) //if the player's approaching at the first of the drawers and it isn't already opened
                 {

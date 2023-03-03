@@ -125,6 +125,7 @@ public class GrabbingObject : MonoBehaviour
         if (ausiliarCoroutineVariable == 1)
         {
             SceneManager.LoadScene(2);
+            DataPersistence.instanceDataPersistence.levelAvancement = 2; //data persistence level advance 2.
         }
     }
     private void OnTriggerStay(Collider other)

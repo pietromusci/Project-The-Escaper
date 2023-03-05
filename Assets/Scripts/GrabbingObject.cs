@@ -9,8 +9,8 @@ using UnityEditor.Animations;
 public class GrabbingObject : MonoBehaviour
 {
     //ausiliar GameObject
-    [SerializeField] private GameObject counterClickerButtonAusiliarVar;
-    private int ausiliarCoroutineVariable = 0;
+    [SerializeField] private GameObject counterClickerButtonAusiliarVar; //audsiliar gameobject used for the counter of click of the clickerbutton. 
+    [SerializeField] private int ausiliarCoroutineVariable = 0; //change of the scene from level1 to level2.
 
     //battery variables.
     private int numberOfActualBatteries = 0; //variable that is used to have the count of the actual batteries. 

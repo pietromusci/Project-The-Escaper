@@ -7774,7 +7774,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 979119766}
         m_TargetAssemblyTypeName: OptionsGameObject, Assembly-CSharp
-        m_MethodName: ChangeSceneFromMenuToLevel
+        m_MethodName: ChangeSceneFromMenuToLevelOne
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

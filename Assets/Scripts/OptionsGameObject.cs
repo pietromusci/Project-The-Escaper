@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class OptionsGameObject : MonoBehaviour
 {
     //declaration variables.
-    private int levelAvancement = 1; //declaration of the varfiable where is allocated the date of level's avancement.
+    private int levelAvancement=1; //declaration of the varfiable where is allocated the date of level's avancement.
     //declaration gameobjects's variables
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainMenu;
@@ -23,7 +23,7 @@ public class OptionsGameObject : MonoBehaviour
         optionsMenu.gameObject.SetActive(false);
     }
     //function that is performed then the player click the Play button.
-    public void ChangeSceneFromMenuToLevel()
+    public void ChangeSceneFromMenuToLevelOne()
     {
         SceneManager.LoadScene(levelAvancement); //this line of code will open the scene of the level.
 

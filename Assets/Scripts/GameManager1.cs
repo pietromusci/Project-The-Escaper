@@ -130,4 +130,10 @@ public class GameManager1 : MonoBehaviour
     {
         counterClickerButtonAusiliarVar.gameObject.SetActive(true); //ausiliar gameobject for the clicking is sected to true.
     }
+
+    public void OnExitButtonCLick()
+    {
+        DataPersistence.instanceDataPersistence.SaveLevelAvancementFunction();
+        SceneManager.LoadScene(0);
+    }
 }

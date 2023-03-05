@@ -40,7 +40,8 @@ public class UIScene : MonoBehaviour
     }
     public void OnExitButtonClick()
     {
-#if(UNITY_EDITOR)
+        DataPersistence.instanceDataPersistence.SaveLevelAvancementFunction();
+#if (UNITY_EDITOR)
         {
             EditorApplication.ExitPlaymode();
         }

@@ -8,11 +8,11 @@ namespace SojaExiles
     public class MouseLook : MonoBehaviour
     {
 
-        private static float mouseXSensitivity = 100.0f;
+        public float mouseXSensitivity = 100f;
 
-        [SerializeField]private Transform playerBody;
+        public Transform playerBody;
 
-        private static float xRotation = 0f;
+        float xRotation = 0f;
 
         // Start is called before the first frame update
         void Start()

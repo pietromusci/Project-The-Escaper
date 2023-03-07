@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008399213, g: 0.008899745, b: 0.01908295, a: 1}
+  m_IndirectSpecularColor: {r: 0.008377835, g: 0.0088662505, b: 0.01908072, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1404,7 +1404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397384820}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -21.990593, y: 11.537283, z: -57.21}
+  m_LocalPosition: {x: -21.990593, y: 11.537283, z: -57.15}
   m_LocalScale: {x: 15.958018, y: 130.18001, z: 119.32}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1422,8 +1422,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0, y: 0.014295429, z: 0.04158438}
-  m_Center: {x: -0.0068682376, y: -0.10830303, z: -0.016997762}
+  m_Size: {x: 0.00626328, y: 0.014295429, z: 0.07308001}
+  m_Center: {x: -0.009999863, y: -0.10830303, z: -0.032745585}
 --- !u!1001 &402044896
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1957,6 +1957,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 54b02c05235bda24a9eacaf1cd036a65, type: 3}
   m_PrefabInstance: {fileID: 598791604}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &613801862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 613801863}
+  m_Layer: 0
+  m_Name: AusiliarGO03TimerStop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &613801863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 613801862}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 814280986}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &650370359
 GameObject:
   m_ObjectHideFlags: 0
@@ -2769,7 +2800,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 868665665}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.873341, y: 9.2417, z: -52.09}
+  m_LocalPosition: {x: -7.873341, y: 9.2417, z: -52.937}
   m_LocalScale: {x: 0.35203874, y: 0.33777606, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8068,22 +8099,20 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388493650523322657}
   m_Mesh: {fileID: -5495902117074765545, guid: a09ee55f63f7b864798e78e53070c663, type: 3}
---- !u!54 &4143381834401623103
-Rigidbody:
+--- !u!64 &4143381834401623103
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 388493650523322657}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5495902117074765545, guid: a09ee55f63f7b864798e78e53070c663, type: 3}
 --- !u!23 &4220490530917415563
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -8306,6 +8335,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1561334236}
     - target: {fileID: 4676229736997716967, guid: 597dbf8cbc218e547b0c142059eb6338, type: 3}
+      propertyPath: ausiliarG03TimerStop
+      value: 
+      objectReference: {fileID: 613801862}
+    - target: {fileID: 4676229736997716967, guid: 597dbf8cbc218e547b0c142059eb6338, type: 3}
       propertyPath: failureLevelAdviseUI
       value: 
       objectReference: {fileID: 316048865}
@@ -8520,6 +8553,10 @@ PrefabInstance:
       propertyPath: keyGrabbedTextAdvise
       value: 
       objectReference: {fileID: 1060727597}
+    - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
+      propertyPath: ausiliarGO03TimerStop
+      value: 
+      objectReference: {fileID: 613801862}
     - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
       propertyPath: clickerButtonVariable
       value: 

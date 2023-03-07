@@ -18,6 +18,7 @@ public class GameManager1 : MonoBehaviour
     //ausiliar gameobjects.
     [SerializeField] private GameObject ausiliarGO1Look; //gameobject used for block the camera movement. 
     [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
+    [SerializeField] private GameObject ausiliarG03TimerStop; //gameobject used to verify that the player have ended the level and the timer must be stopped.
 
     //declaration variables.
     private  int levelNumber = 0; //this variable is used to identify the level and load the scene of the relative level if the time ends. 
@@ -33,7 +34,7 @@ public class GameManager1 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownTextUI; //countdown timer text.
     [SerializeField] private TextMeshProUGUI failureLevelAdviseUI; //end countdown timer text advise.
     private float valueTimeForCountdown;  //variable that contain the value in seconds of the timer and it is used for slides the time how the reality.
-    public bool isGameEnded;  //boolean that verify if the timer is expired(scaduto).
+    public bool isGameAlreadyEnded;  //boolean that verify if the timer is expired(scaduto).
 
     // Start is called before the first frame update.
     void Start()
@@ -69,7 +70,7 @@ public class GameManager1 : MonoBehaviour
 
         if (isCoroutineEnded != false) //if the loading sub-scene is complete, this part of script make time(used for the timer) pass. 
         {
-            if (valueTimeForCountdown > 0) //if the time(in deltatime value) is major than zero
+            if ((valueTimeForCountdown > 0) && (ausiliarG03TimerStop.gameObject.activeSelf == false)) //if the time(in deltatime value) is major than zero
             {
                 valueTimeForCountdown = (valueTimeForCountdown - Time.deltaTime);  //the time will slide.
             }
@@ -78,6 +79,7 @@ public class GameManager1 : MonoBehaviour
                 valueTimeForCountdown = 0.00f; //the time will set to zero.
             }
             DisplayTimeCountdownFunction(valueTimeForCountdown); //call of the function
+
         }
 
         if (isFailureCoroutineEnded == true)
@@ -107,16 +109,20 @@ public class GameManager1 : MonoBehaviour
         countdownTextUI.text = string.Format("{0:00}:{1:00}", minutesOfCountdown, secondsOfCountdown);   //change of the format from int value to string(for be viewed in the countdown text).
         if ((minutesOfCountdown == 0) && (secondsOfCountdown <= 10)) //if the timer is arrived to 10 seconds or less
         {
-            countdownTextUI.color = Color.red; //the color will be setted to red.
-            if ((secondsOfCountdown == 0) && (isGameEnded != true)) //if the timer is arrived to 0 seconds remaining
+            countdownTextUI.color = Color.red; //the color of the timer text will be setted to red.
+            if ((secondsOfCountdown == 0) && (isGameAlreadyEnded != true)) //if the timer is arrived to 0 seconds remaining
             {
-                isGameEnded = true;  //the boolean value that verify that the timer is expired(scaduto) will changed to tue.
+                isGameAlreadyEnded = true;  //the boolean value that verify that the timer is expired(scaduto) will changed to tue.
                 StartCoroutine(FailureLevelCoroutine());
-                failureLevelAdviseUI.gameObject.SetActive(true);
-                Debug.Log("il tenpo è scaduto, riprova!");
-                ausiliarGO1Look.gameObject.SetActive(true);
-                ausiliarGO2Move.gameObject.SetActive(true);
+                failureLevelAdviseUI.gameObject.SetActive(true); 
+                Debug.Log("il tempo è scaduto, riprova!");
+                ausiliarGO1Look.gameObject.SetActive(true); //ausiliar gameobject used in the look script.
+                ausiliarGO2Move.gameObject.SetActive(true); //ausiliar gameobject used in the movement script.
             }
+        }
+        if ((valueTimeForCountdown > 0) && (ausiliarG03TimerStop.gameObject.activeInHierarchy == true)) //if the level is passed successfully
+        {
+            countdownTextUI.color = Color.green; //the color of the timer text will be setted to green.
         }
     }
 

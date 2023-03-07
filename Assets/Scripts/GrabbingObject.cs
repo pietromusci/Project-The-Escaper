@@ -43,6 +43,8 @@ public class GrabbingObject : MonoBehaviour
     //door bug variables.
     private int ausiliarVarBunkerDoor = 0; //ausiliar variable that is used for
     private bool areDoorsFixed = false; //variable that is used for resolve a fix of the door. 
+    private bool doorFixingBugErrorMissing = false;  //ausiliar variable that is used for fix the bug of missing key at the end of the level. 
+    private bool ausiliarFixingOpeningTextConflictWithMissingText = false; //ausiliar variable that is used for fix the bug of sovrapposition between opening text and missing key text.
 
     //texts and images variables 
     [SerializeField] private TextMeshProUGUI doorBunkerOpeningTextAdvise;  //variable where's contained the text "Complimenti!Hai aperto il bunker!".
@@ -63,6 +65,7 @@ public class GrabbingObject : MonoBehaviour
     //ausiliar gameobjects.
     [SerializeField] private GameObject ausiliarGO1Look; //gameobject used for block the camera movement. 
     [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
+    [SerializeField] private GameObject ausiliarGO03TimerStop; //gameobject used to verify that the player have ended the level and the timer must be stopped.
 
     // Start function is called before the first frame update.(MAIN)
     private void Start()
@@ -120,6 +123,7 @@ public class GrabbingObject : MonoBehaviour
         if (isBatteryStarted == true) //if the battery is insert in the torch
         {
             timerAusiliarGOLengthLifeOfBattery.gameObject.SetActive(acceptedTransition); //the ausiliar gameobject is actived for verifiy to "batteryiconscript" that the coroutine is started.
+            isBatteryStarted = false;
         }
 
         if (ausiliarCoroutineVariable == 1)
@@ -215,6 +219,8 @@ public class GrabbingObject : MonoBehaviour
                     if ((ausiliarVarBunkerDoor == 1) && (areDoorsFixed == true))
                     {
                         secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
+                        doorFixingBugErrorMissing = true;
+                        ausiliarGO03TimerStop.gameObject.SetActive(true); //ausiliar variable that inform the GameManager that the timer must be stopped.
                     }
                     else if ((ausiliarVarBunkerDoor == 0) && (areDoorsFixed == false)) //this condition verify if the player is opening the first of the second door of the bunker. 
                     {
@@ -229,8 +235,11 @@ public class GrabbingObject : MonoBehaviour
                 }
                 else  //if the player doesn't have the key 
                 {
-                    doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
-                    StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
+                    if ((doorFixingBugErrorMissing == false) && (ausiliarFixingOpeningTextConflictWithMissingText == false)) //condition that verify that there aren't other text messages(opening text) and that this text doesn't appeaar at the end of the level1.
+                    {
+                         doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
+                         StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
+                    }
                 }
             }
 
@@ -303,17 +312,19 @@ public class GrabbingObject : MonoBehaviour
     //this function is used for get 4 second of waiting before the text is disabled.
     private IEnumerator TimeOfViewingOpeningDoorBunkerText()
     {
+        ausiliarFixingOpeningTextConflictWithMissingText = true;
         yield return (new WaitForSeconds(4.0f));  //4 seconds for read the text that inform the player who's opening the door for entry in the bunker.
         isBunkerDoorOpeningCoroutineEnded = true;
+        ausiliarFixingOpeningTextConflictWithMissingText = false;
     }
 
     //this function is used for get 150 second of waiting before the battery turns off.
     private IEnumerator LengthLifeOfTheBatteryCoroutine()
     {
-        isBatteryStarted = true;
+        isBatteryStarted = true; //ausiliar variable used to understand when the coroutine is active. 
         yield return (new WaitForSeconds(180.0f)); //150 seconds for turns off the battery selected.
         isBatteryTurnedOff = true;
-        isBatteryStarted = false;
+        isBatteryStarted = false; //ausiliar variable used to understand when the coroutine is active,who changes the value in false for tell at the code that the coroutine is ended. 
     }
 
     //this funtion is used for get 5 second of waiting for reading the grab battery text.

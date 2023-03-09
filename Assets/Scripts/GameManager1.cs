@@ -46,6 +46,7 @@ public class GameManager1 : MonoBehaviour
         StartCoroutine(LoadingCoroutine());
 
         nameOftheCurrentScene = SceneManager.GetActiveScene().name; //get the name of the current active scene.
+        Debug.Log(nameOftheCurrentScene);
         if(nameOftheCurrentScene == nameFirstLevelScene) //if the scene is Level1
         {
             valueTimeForCountdown = 299.00f; //set the start value of the timer to 5 minutes.

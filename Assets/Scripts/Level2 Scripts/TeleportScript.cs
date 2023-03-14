@@ -17,9 +17,9 @@ public class TeleportScript : MonoBehaviour
     {
         if (ausiliarTeleportVariable.gameObject.activeInHierarchy == true) //if the ausiliar variable is ready for the teleport
         {
-            transform.position = new Vector3(488.4675f, 7.942688f, 266.5234f);  //the position of the player is translated to the environment external of the level.
+            transform.position = new Vector3(684.986145f, 2.80966496f, 320.889008f);  //the position of the player is translated to the environment external of the level.
             transform.localScale = new Vector3(0.735f, 0.735f, 0.735f); //the player gameobject is scaled for be adapted to the environment.
-            ausiliarTeleportVariable.gameObject.SetActive(false);
+            ausiliarTeleportVariable.gameObject.SetActive(false); 
         }
     }
 }

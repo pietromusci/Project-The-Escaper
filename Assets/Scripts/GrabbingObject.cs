@@ -222,18 +222,18 @@ public class GrabbingObject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (DataPersistence.instanceDataPersistence.levelAvancement == 1) //if the scene is of the first level 
-        {
+        //if (DataPersistence.instanceDataPersistence.levelAvancement == 1) //if the scene is of the first level 
+        //{
             Level1FunctionTriggerer(other); //call the function triggerer of the first level.
-        }
-        else if (DataPersistence.instanceDataPersistence.levelAvancement == 2) //if the scene is of the second level
-        {
+        //}
+        //else if (DataPersistence.instanceDataPersistence.levelAvancement == 2) //if the scene is of the second level
+        //{
             Level2FunctionTriggerer(other); //call the function triggerer of the second level.
-        }
-        else if (DataPersistence.instanceDataPersistence.levelAvancement == 3) //if the scene is of the third level
-        {
+        //}
+        //else if (DataPersistence.instanceDataPersistence.levelAvancement == 3) //if the scene is of the third level
+        //{
             Level3FunctionTriggerer(other); //call the function triggerer of the third level.
-        }
+        //}
     }
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
     private void OpeningOrClosingParametersMethod(int numberOfDrawer)

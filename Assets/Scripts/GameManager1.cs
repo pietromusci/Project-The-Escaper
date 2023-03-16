@@ -52,9 +52,9 @@ public class GameManager1 : MonoBehaviour
             valueTimeForCountdown = 299.00f; //set the start value of the timer to 5 minutes.
             levelNumber = 1;
         }
-        else if(nameOftheCurrentScene ==nameSecondLevelScene) //if the scene is Level2
+        else if(nameOftheCurrentScene == nameSecondLevelScene) //if the scene is Level2
         {
-            valueTimeForCountdown = 599.00f; //set the start value of the timer to 10 minutes.
+            valueTimeForCountdown = 1199.00f; //set the start value of the timer to 10 minutes.
             levelNumber = 2;
         }
     }

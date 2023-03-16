@@ -11,6 +11,7 @@ TagManager:
   - Battery
   - EndLevel
   - ExitFirstHouseLevel2
+  - EndLevel2Passingtransition
   layers:
   - Default
   - TransparentFX

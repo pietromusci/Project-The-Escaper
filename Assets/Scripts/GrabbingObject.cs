@@ -67,6 +67,10 @@ public class GrabbingObject : MonoBehaviour
     [SerializeField] private GameObject ausiliarGO2Move;  //gameobject used for block the player movement.
     [SerializeField] private GameObject ausiliarGO03TimerStop; //gameobject used to verify that the player have ended the level and the timer must be stopped.
 
+    //level2 variables
+    [SerializeField] private GameObject padlockGameObjectTransition;  //this padlock is used for close the door of the mine.
+    private int ausiliarCoroutineVariable2 = 0;
+
     // Start function is called before the first frame update.(MAIN)
     private void Start()
     {
@@ -126,10 +130,16 @@ public class GrabbingObject : MonoBehaviour
             isBatteryStarted = false;
         }
 
-        if (ausiliarCoroutineVariable == 1)
+        if (ausiliarCoroutineVariable == 1) //if the first level is passed
         {
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(2); //load the second level.
             DataPersistence.instanceDataPersistence.levelAvancement = 2; //data persistence level advance 2.
+        }
+
+        if(ausiliarCoroutineVariable2 == 1) //if the second level is passed
+        {
+            SceneManager.LoadScene(3); //load the third level.
+            DataPersistence.instanceDataPersistence.levelAvancement = 3; //data persistence level advance 3
         }
     }
     private void OnTriggerStay(Collider other)
@@ -212,57 +222,18 @@ public class GrabbingObject : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-            if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
-            {
-                if ((isKeyGrabbedToThePlayer == true))  //if the player has the key 
-                {
-                    if ((ausiliarVarBunkerDoor == 1) && (areDoorsFixed == true))
-                    {
-                        secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
-                        doorFixingBugErrorMissing = true;
-                        ausiliarGO03TimerStop.gameObject.SetActive(true); //ausiliar variable that inform the GameManager that the timer must be stopped.
-                    }
-                    else if ((ausiliarVarBunkerDoor == 0) && (areDoorsFixed == false)) //this condition verify if the player is opening the first of the second door of the bunker. 
-                    {
-                        firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
-                        StartCoroutine(FixingDoorBug());
-                    }
-
-                    doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
-                    keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
-                    StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
-                    isKeyGrabbedToThePlayer = false;
-                }
-                else  //if the player doesn't have the key 
-                {
-                    if ((doorFixingBugErrorMissing == false) && (ausiliarFixingOpeningTextConflictWithMissingText == false)) //condition that verify that there aren't other text messages(opening text) and that this text doesn't appeaar at the end of the level1.
-                    {
-                         doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
-                         StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
-                    }
-                }
-            }
-
-            if (other.gameObject.CompareTag("ExitFirstHouseLevel2") && (isKeyGrabbedToThePlayer == true)) //if the player has the key to open the first door of level2
-            {
-                if (isKeyCoroutineEndedAusiliar == true)
-                {
-                    ausiliarTeleportGO1.gameObject.SetActive(true);
-                    isKeyGrabbedToThePlayer = false;
-                    keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
-                }
-            }
-
-            //end level trigger
-            if (other.gameObject.CompareTag("EndLevel"))
-            {
-                Debug.Log("level passed");
-                levelPassedTextAdvise.gameObject.SetActive(true); //level passed advise text.
-                StartCoroutine(EndSceneCoroutineWait()); //starting of 6 seconds of coroutine.
-                ausiliarGO1Look.gameObject.SetActive(acceptedTransition); //block of the movement input from the player.
-                ausiliarGO2Move.gameObject.SetActive(acceptedTransition); //block of the looking visual input from the player.
-            }
-
+        if (DataPersistence.instanceDataPersistence.levelAvancement == 1) //if the scene is of the first level 
+        {
+            Level1FunctionTriggerer(other); //call the function triggerer of the first level.
+        }
+        else if (DataPersistence.instanceDataPersistence.levelAvancement == 2) //if the scene is of the second level
+        {
+            Level2FunctionTriggerer(other); //call the function triggerer of the second level.
+        }
+        else if (DataPersistence.instanceDataPersistence.levelAvancement == 3) //if the scene is of the third level
+        {
+            Level3FunctionTriggerer(other); //call the function triggerer of the third level.
+        }
     }
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
     private void OpeningOrClosingParametersMethod(int numberOfDrawer)
@@ -342,10 +313,111 @@ public class GrabbingObject : MonoBehaviour
         hasAlreadyBatteryText = true;
     }
 
-    //end scene coroutine.
+    //---------------------
+    //LEVEL1!
+    //+
+
+    //end scene coroutine level1.
     private IEnumerator EndSceneCoroutineWait()
     {
         yield return (new WaitForSeconds(5.50f));
         ausiliarCoroutineVariable = 1;
+    }
+
+    //level1 triggerer active function.
+    private void Level1FunctionTriggerer(Collider other)
+    {
+        if (other.gameObject.CompareTag("BunkerDoor"))  //if the player's approaching at the door
+        {
+            if ((isKeyGrabbedToThePlayer == true))  //if the player has the key 
+            {
+                if ((ausiliarVarBunkerDoor == 1) && (areDoorsFixed == true))
+                {
+                    secondBunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter(created in the second animator controller) to true.
+                    doorFixingBugErrorMissing = true;
+                    ausiliarGO03TimerStop.gameObject.SetActive(true); //ausiliar variable that inform the GameManager that the timer must be stopped.
+                }
+                else if ((ausiliarVarBunkerDoor == 0) && (areDoorsFixed == false)) //this condition verify if the player is opening the first of the second door of the bunker. 
+                {
+                    firstbunkerDoorAnimationOpening.SetBool("CanBeOpen", acceptedTransition); //in this line of code,we set the "CanBeOpen" parameter (created in the first animator controller of the door) to true.
+                    StartCoroutine(FixingDoorBug());
+                }
+
+                doorBunkerOpeningTextAdvise.gameObject.SetActive(acceptedTransition);  // the text that inform the player who's opening the bunker door is sected to active.
+                keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
+                StartCoroutine(TimeOfViewingOpeningDoorBunkerText()); // start of 4 seconds of coroutine
+                isKeyGrabbedToThePlayer = false;
+            }
+            else  //if the player doesn't have the key 
+            {
+                if ((doorFixingBugErrorMissing == false) && (ausiliarFixingOpeningTextConflictWithMissingText == false)) //condition that verify that there aren't other text messages(opening text) and that this text doesn't appeaar at the end of the level1.
+                {
+                    doorBunkerMissingKeyText.gameObject.SetActive(acceptedTransition);  // the text that inform the player who doesn't have the key to open the door is sected to true.
+                    StartCoroutine(TimeOfViewingMissingKeyText()); //start of 5 seconds of coroutine
+                }
+            }
+        }
+
+        //end level trigger level1
+        if (other.gameObject.CompareTag("EndLevel"))
+        {
+            Debug.Log("level passed");
+            levelPassedTextAdvise.gameObject.SetActive(true); //level passed advise text.
+            StartCoroutine(EndSceneCoroutineWait()); //starting of 6 seconds of coroutine.
+            ausiliarGO1Look.gameObject.SetActive(acceptedTransition); //block of the movement input from the player.
+            ausiliarGO2Move.gameObject.SetActive(acceptedTransition); //block of the looking visual input from the player.
+            ausiliarGO03TimerStop.gameObject.SetActive(acceptedTransition); //block of the timer value.
+        }
+    
+    }
+
+    //-------------------------
+    //LEVEL2!
+    //+
+
+    //coroutine for the end of the second level.
+    private IEnumerator EndScene2CoroutineWait()
+    {
+        yield return new WaitForSeconds(6.0f);
+        ausiliarCoroutineVariable2 = 1;
+    }
+
+    //level2 triggerer active function.
+    private void Level2FunctionTriggerer(Collider other)
+    {
+        Debug.Log("called function");
+        //passage transfor from in of the house to the out.
+        if (other.gameObject.CompareTag("ExitFirstHouseLevel2") && (isKeyGrabbedToThePlayer == true)) //if the player has the key to open the first door of level2
+        {
+            if (isKeyCoroutineEndedAusiliar == true)
+            {
+                ausiliarTeleportGO1.gameObject.SetActive(true);
+                isKeyGrabbedToThePlayer = false;
+                keyIconImage.gameObject.SetActive(false); //disactive the icon of the key.
+            }
+        }
+
+        //end level triggerer level2.
+        else if (other.gameObject.CompareTag("EndLevel2Passingtransition")) //if the player arrives in front ofthe mine
+        {
+            padlockGameObjectTransition.gameObject.SetActive(false);
+            Destroy(padlockGameObjectTransition); //destroy the padlock of the mine.
+            Debug.Log("level passed");
+            levelPassedTextAdvise.gameObject.SetActive(true); //level passed advise text.
+            StartCoroutine(EndScene2CoroutineWait()); //starting of 6 seconds of coroutine.
+            ausiliarGO1Look.gameObject.SetActive(acceptedTransition); //block of the movement input from the player.
+            ausiliarGO2Move.gameObject.SetActive(acceptedTransition); //block of the looking visual input from the player.
+            ausiliarGO03TimerStop.gameObject.SetActive(acceptedTransition); //block of the timer value.
+        }
+    }
+
+    //-------------------
+    //LEVEL3!
+    //+
+
+    //level3 triggerer active function.
+    private void Level3FunctionTriggerer(Collider other)
+    {
+
     }
 }

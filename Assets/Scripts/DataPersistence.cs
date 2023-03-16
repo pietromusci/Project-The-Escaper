@@ -5,6 +5,7 @@ using System.IO;
 
 public class DataPersistence : MonoBehaviour
 {
+    //instance of the class variable.
     public static DataPersistence instanceDataPersistence; //Instance of the "DataPersistence" class.This class is static.
 
     //persistent variables

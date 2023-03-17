@@ -71,6 +71,9 @@ public class GrabbingObject : MonoBehaviour
     [SerializeField] private GameObject padlockGameObjectTransition;  //this padlock is used for close the door of the mine.
     private int ausiliarCoroutineVariable2 = 0;
 
+    //name of the current scene variable
+    private string nameOftheCurrentScene;
+
     // Start function is called before the first frame update.(MAIN)
     private void Start()
     {
@@ -80,6 +83,7 @@ public class GrabbingObject : MonoBehaviour
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
         levelPassedTextAdvise.gameObject.SetActive(rejectedTransition);
 
+        nameOftheCurrentScene = SceneManager.GetActiveScene().name; //get the name of the current active scene.
     }
 
     // Update function is called once per frame(MAIN2)
@@ -142,6 +146,8 @@ public class GrabbingObject : MonoBehaviour
             DataPersistence.instanceDataPersistence.levelAvancement = 3; //data persistence level advance 3
         }
     }
+
+    //function that is called when the player triggerer trigger with another gameobject with a box collider marked like trigger.this function is called from the second frame after the trigger.
     private void OnTriggerStay(Collider other)
     {
         if (counterClickerButtonAusiliarVar.gameObject.activeSelf == true)
@@ -220,20 +226,22 @@ public class GrabbingObject : MonoBehaviour
             counterClickerButtonAusiliarVar.gameObject.SetActive(false);
         }
     }
+
+    //function that is called when the triggerer of the player trigger with another gameobject with a tag and a box collider marked like trigger(only for the first frame after the trigger). 
     private void OnTriggerEnter(Collider other)
     {
-        //if (DataPersistence.instanceDataPersistence.levelAvancement == 1) //if the scene is of the first level 
-        //{
+        if(nameOftheCurrentScene == "Level1") //if the scene is of the first level
+        {
             Level1FunctionTriggerer(other); //call the function triggerer of the first level.
-        //}
-        //else if (DataPersistence.instanceDataPersistence.levelAvancement == 2) //if the scene is of the second level
-        //{
+        }
+        else if(nameOftheCurrentScene == "Level2") //if the scene is of the second level
+        {
             Level2FunctionTriggerer(other); //call the function triggerer of the second level.
-        //}
-        //else if (DataPersistence.instanceDataPersistence.levelAvancement == 3) //if the scene is of the third level
-        //{
+        }
+        else if(nameOftheCurrentScene == "Level3") //if the scene is on the third level
+        {
             Level3FunctionTriggerer(other); //call the function triggerer of the third level.
-        //}
+        }
     }
     //function that verify if the Drawer must be opened or closed,and then do the action(of opening or closing).
     private void OpeningOrClosingParametersMethod(int numberOfDrawer)
@@ -293,7 +301,7 @@ public class GrabbingObject : MonoBehaviour
     private IEnumerator LengthLifeOfTheBatteryCoroutine()
     {
         isBatteryStarted = true; //ausiliar variable used to understand when the coroutine is active. 
-        yield return (new WaitForSeconds(180.0f)); //150 seconds for turns off the battery selected.
+        yield return (new WaitForSeconds(180.0f)); //180 seconds for turns off the battery selected.
         isBatteryTurnedOff = true;
         isBatteryStarted = false; //ausiliar variable used to understand when the coroutine is active,who changes the value in false for tell at the code that the coroutine is ended. 
     }
@@ -386,7 +394,7 @@ public class GrabbingObject : MonoBehaviour
     private void Level2FunctionTriggerer(Collider other)
     {
         Debug.Log("called function");
-        //passage transfor from in of the house to the out.
+        //passage transform from in of the house to the out.
         if (other.gameObject.CompareTag("ExitFirstHouseLevel2") && (isKeyGrabbedToThePlayer == true)) //if the player has the key to open the first door of level2
         {
             if (isKeyCoroutineEndedAusiliar == true)

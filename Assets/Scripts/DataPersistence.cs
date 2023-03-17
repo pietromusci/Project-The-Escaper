@@ -43,7 +43,7 @@ public class DataPersistence : MonoBehaviour
                                                                        //"jsonString" is the variable where are contained the datas of the variables serialized in JSON format(in the serialization process of the coding is a string).
     }
 
-    //this function has the scope of loading the levelavancement data, revert it in variables data. 
+    //this function has the scope of loading the "levelavancement" data, revert it in variables data. 
     public void LoadLevelAvancementFunction()
     {
         string dataStructurePath = Application.persistentDataPath + "/savefile.json"; //save in a string variable the datas contained in the persistent file transformed in JSON files.
@@ -54,7 +54,7 @@ public class DataPersistence : MonoBehaviour
 
             levelAvancement = dataStructure.serializedLevelAvancement; //when the game is restarted, this variable is 
         }
-        else
+        else //if the persistent file doesn't exist.
         {
             Debug.LogWarning("File not founded");
         }

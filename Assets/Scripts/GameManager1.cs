@@ -51,11 +51,15 @@ public class GameManager1 : MonoBehaviour
         {
             valueTimeForCountdown = 299.00f; //set the start value of the timer to 5 minutes.
             levelNumber = 1;
+            DataPersistence.instanceDataPersistence.levelAvancement = 1; //add the persistence of the level avancemenent 1.
+            DataPersistence.instanceDataPersistence.SaveLevelAvancementFunction(); //save this value in json
         }
         else if(nameOftheCurrentScene == nameSecondLevelScene) //if the scene is Level2
         {
             valueTimeForCountdown = 1199.00f; //set the start value of the timer to 10 minutes.
             levelNumber = 2;
+            DataPersistence.instanceDataPersistence.levelAvancement = 2; //add the persistence of the level avancemenent 2.
+            DataPersistence.instanceDataPersistence.SaveLevelAvancementFunction(); //save this value in json.
         }
     }
     private void Update()

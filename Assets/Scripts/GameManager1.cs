@@ -8,9 +8,10 @@ using TMPro;
 public class GameManager1 : MonoBehaviour
 {
     //variables that are used for identify the actual level scene.  
-    private string nameOftheCurrentScene; //in this variable we get the name of the current scene 
-    private static string nameFirstLevelScene = "Level1"; //variable that is used to compare the "nameOfTheCurrentScene" to the first level scene
-    private static string nameSecondLevelScene = "Level2"; //variable that is used to compare the "nameOfTheCurrentScene" to the second level scene
+    private string nameOftheCurrentScene; //in this variable we get the name of the current scene .
+    private static string nameFirstLevelScene = "Level1"; //variable that is used to compare the "nameOfTheCurrentScene" to the first level scene.
+    private static string nameSecondLevelScene = "Level2"; //variable that is used to compare the "nameOfTheCurrentScene" to the second level scene.
+    private static string nameThirdLevelScene = "level3"; //variable that is used to compare the "nameofthecurrentscene" to the third level scene.
 
     //this variable is used for take the count of the click of the main button.
     [SerializeField] private GameObject counterClickerButtonAusiliarVar;
@@ -34,7 +35,7 @@ public class GameManager1 : MonoBehaviour
     [SerializeField] private TextMeshProUGUI countdownTextUI; //countdown timer text.
     [SerializeField] private TextMeshProUGUI failureLevelAdviseUI; //end countdown timer text advise.
     private float valueTimeForCountdown;  //variable that contain the value in seconds of the timer and it is used for slides the time how the reality.
-    public bool isGameAlreadyEnded;  //boolean that verify if the timer is expired(scaduto).
+    private bool isGameAlreadyEnded;  //boolean that verify if the timer is expired(scaduto).
 
     // Start is called before the first frame update.
     void Start()
@@ -60,6 +61,13 @@ public class GameManager1 : MonoBehaviour
             levelNumber = 2;
             DataPersistence.instanceDataPersistence.levelAvancement = 2; //add the persistence of the level avancemenent 2.
             DataPersistence.instanceDataPersistence.SaveLevelAvancementFunction(); //save this value in json.
+        }
+        else if(nameOftheCurrentScene == nameThirdLevelScene) // if the scene is Level3
+        {
+            valueTimeForCountdown = 1199.00f; //set the start value of the timer to 10 minutes. 
+            levelNumber = 3;
+            DataPersistence.instanceDataPersistence.levelAvancement = 3; //add the persistence of the level avancement 3.
+            DataPersistence.instanceDataPersistence.SaveLevelAvancementFunction(); //save this value in json format extension. 
         }
     }
     private void Update()

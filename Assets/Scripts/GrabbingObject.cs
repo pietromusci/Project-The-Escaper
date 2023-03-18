@@ -35,7 +35,7 @@ public class GrabbingObject : MonoBehaviour
     private bool isKeyCoroutineEndedAusiliar = false;
     private bool isKeyMissingCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingMissingKeyText coroutine.
     private bool isBunkerDoorOpeningCoroutineEnded = false;  //boolean where is contained the information about the end or not of the TimeOfViewingOpeningDoorBunkerText coroutine.
-    [SerializeField] bool[] areDrawersOpened = { false, false, false, false }; //booleans where are contained the informations about the drawers,if they are open or not.
+    private bool[] areDrawersOpened = { false, false, false, false }; //booleans where are contained the informations about the drawers,if they are open or not.
     private bool isBatteryTurnedOff = false; //boolean where's contained the information about the grab or not of the battery.
     private bool isBatteryGrabbed = false;
     private bool hasAlreadyBatteryText = false;

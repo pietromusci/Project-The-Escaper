@@ -33566,7 +33566,6 @@ MonoBehaviour:
   gameButtons: {fileID: 1099417084597511035}
   countdownTextUI: {fileID: 1099417083154858791}
   failureLevelAdviseUI: {fileID: 1099417084699352253}
-  isGameAlreadyEnded: 0
 --- !u!4 &4676229738322061131
 Transform:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ public class OptionsGameObject : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject mainMenu;
 
+    public GameObject theNPC;
+
     //function that is performed when the player click the Option button. 
     public void OnClickOptionButton()
     {
@@ -27,6 +29,7 @@ public class OptionsGameObject : MonoBehaviour
     //function that is performed when the player click the Play button.
     public void ChangeSceneFromMenuToLevelOne()
     {
+        theNPC.GetComponent<Animator>().Play("StandUP");
         SceneManager.LoadScene(levelAvancement); //this line of code will open the scene of the level.
     }
 

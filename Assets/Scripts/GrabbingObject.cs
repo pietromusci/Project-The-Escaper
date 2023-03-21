@@ -328,7 +328,7 @@ public class GrabbingObject : MonoBehaviour
     //end scene coroutine level1.
     private IEnumerator EndSceneCoroutineWait()
     {
-        yield return (new WaitForSeconds(5.50f));
+        yield return (new WaitForSeconds(1.50f));
         ausiliarCoroutineVariable = 1;
     }
 
@@ -386,7 +386,7 @@ public class GrabbingObject : MonoBehaviour
     //coroutine for the end of the second level.
     private IEnumerator EndScene2CoroutineWait()
     {
-        yield return new WaitForSeconds(6.0f);
+        yield return new WaitForSeconds(1.0f);
         ausiliarCoroutineVariable2 = 1;
     }
 

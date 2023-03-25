@@ -6528,8 +6528,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.7168, y: -18.8337}
-  m_SizeDelta: {x: 89.8996, y: 92.2612}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1359061905
 PrefabInstance:
@@ -6944,7 +6944,7 @@ Transform:
   - {fileID: 46040826}
   - {fileID: 2088386406}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1453166003
 PrefabInstance:
@@ -9271,21 +9271,21 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1795233299}
+  - {fileID: 709103464}
+  - {fileID: 834047812}
+  - {fileID: 838306300}
   - {fileID: 223219048}
+  - {fileID: 871947803}
   - {fileID: 214554896}
   - {fileID: 509081028}
+  - {fileID: 1186711931}
   - {fileID: 254865512}
+  - {fileID: 1293684289}
   - {fileID: 1389036715}
+  - {fileID: 1696604610}
   - {fileID: 1050585281}
   - {fileID: 1798062543}
   - {fileID: 640638755}
-  - {fileID: 1293684289}
-  - {fileID: 871947803}
-  - {fileID: 1696604610}
-  - {fileID: 1186711931}
-  - {fileID: 709103464}
-  - {fileID: 838306300}
-  - {fileID: 834047812}
   m_Father: {fileID: 66743725}
   m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9800,9 +9800,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 875976429}
     - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
+      propertyPath: pauseSubScene
+      value: 
+      objectReference: {fileID: 669445442}
+    - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
       propertyPath: playerFatherGO
       value: 
       objectReference: {fileID: 2130522794}
+    - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
+      propertyPath: textAndButtons
+      value: 
+      objectReference: {fileID: 853575597}
     - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
       propertyPath: ausiliarGO1Look
       value: 
@@ -9811,6 +9819,10 @@ PrefabInstance:
       propertyPath: ausiliarGO2Move
       value: 
       objectReference: {fileID: 936631442}
+    - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
+      propertyPath: loadingSubScene
+      value: 
+      objectReference: {fileID: 1311382677}
     - target: {fileID: 8449187172582865400, guid: 00209ec3c6d90304c8ae07f8f5053dc5, type: 3}
       propertyPath: ausiliarTeleportGO1
       value: 

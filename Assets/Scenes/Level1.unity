@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.008399213, g: 0.008899745, b: 0.01908295, a: 1}
+  m_IndirectSpecularColor: {r: 0.008377835, g: 0.0088662505, b: 0.01908072, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1931,7 +1931,7 @@ GameObject:
   m_TagString: EndLevel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &397384821
 Transform:
@@ -1941,7 +1941,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 397384820}
   m_LocalRotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: -21.990593, y: 11.537283, z: -57.15}
+  m_LocalPosition: {x: -21.990593, y: 11.537283, z: -38.183}
   m_LocalScale: {x: 15.958018, y: 130.18001, z: 119.32}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1959,8 +1959,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.00626328, y: 0.014295429, z: 0.07308001}
-  m_Center: {x: -0.009999863, y: -0.10830303, z: -0.032745585}
+  m_Size: {x: 0.066417485, y: 0.014295429, z: 0.07308001}
+  m_Center: {x: -0.04007696, y: -0.10830303, z: -0.032745585}
 --- !u!1 &406370855
 GameObject:
   m_ObjectHideFlags: 0
@@ -2914,7 +2914,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3053166770886261695, guid: 6e0bd0e86f462984ba8cdb7c9325af9f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 24.822239
+      value: 5.428
       objectReference: {fileID: 0}
     - target: {fileID: 3053166770886261695, guid: 6e0bd0e86f462984ba8cdb7c9325af9f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4126,8 +4126,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 44.7168, y: -18.8337}
-  m_SizeDelta: {x: 89.8996, y: 92.2612}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &1035795073
 PrefabInstance:
@@ -10413,7 +10413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2136874237}
   m_LocalRotation: {x: 0.046136666, y: 0.07221968, z: 0.0047905263, w: 0.9963096}
-  m_LocalPosition: {x: 0.05, y: 4.4, z: 4.77}
+  m_LocalPosition: {x: 0.08, y: 2.72, z: 0.71}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10432,8 +10432,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
+  m_Intensity: 0.95
+  m_Range: 3.25
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -10495,7 +10495,7 @@ GameObject:
   - component: {fileID: 2190095884744677620}
   - component: {fileID: 4143381834401623103}
   m_Layer: 0
-  m_Name: tulleno
+  m_Name: BunkerRoomEnvironment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10859,6 +10859,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1190410481}
     m_Modifications:
+    - target: {fileID: 2333540616109039574, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333540616109039574, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333540616109039574, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
+      propertyPath: m_LightProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2333540616109039574, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
+      propertyPath: m_ReflectionProbeUsage
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3470386416289047737, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -10869,7 +10885,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3470386416289047737, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 9.205
+      value: 9.2087
       objectReference: {fileID: 0}
     - target: {fileID: 3470386416289047737, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10906,6 +10922,10 @@ PrefabInstance:
     - target: {fileID: 4279152623284633091, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
       propertyPath: m_Name
       value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 4279152623284633091, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87d8cd07202a950409eac08ec70eadeb, type: 3}
@@ -11242,6 +11262,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 740959076}
     - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: canvasLevelGO
+      value: 
+      objectReference: {fileID: 1671033181}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: pauseSubScene
+      value: 
+      objectReference: {fileID: 338486581}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: textAndButtons
+      value: 
+      objectReference: {fileID: 406370855}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
       propertyPath: ausiliarGO1Look
       value: 
       objectReference: {fileID: 691420613}
@@ -11249,6 +11281,22 @@ PrefabInstance:
       propertyPath: ausiliarGO2Move
       value: 
       objectReference: {fileID: 755605462}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: loadingSubScene
+      value: 
+      objectReference: {fileID: 1025071542}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: batteryStatusBlockGO
+      value: 
+      objectReference: {fileID: 93166833}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: clickerButtonBlockGO
+      value: 
+      objectReference: {fileID: 1135888671}
+    - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
+      propertyPath: fixedJoystickBlockGO
+      value: 
+      objectReference: {fileID: 2929252283154277744}
     - target: {fileID: 5312242988881315822, guid: 5b82fc0ee2ed2874091088c74ab52d22, type: 3}
       propertyPath: keyGrabbedTextAdvise
       value: 

@@ -71,6 +71,11 @@ public class GrabbingObject : MonoBehaviour
     [SerializeField] private GameObject padlockGameObjectTransition;  //this padlock is used for close the door of the mine.
     private int ausiliarCoroutineVariable2 = 0;
 
+    //gameobjects that contains fixed jostick, clicker button and button.(ALLTHE CANVAS)
+    [SerializeField] private GameObject loadingSubScene;  //loading screen gameobject. 
+    [SerializeField] private GameObject textAndButtons; //the children "GameButtons&Text".
+    [SerializeField] private GameObject pauseSubScene; // the children "pauseSubScene".
+
     //name of the current scene variable
     private string nameOftheCurrentScene;
 
@@ -82,6 +87,7 @@ public class GrabbingObject : MonoBehaviour
         batteryGrabbedTextAdvise.gameObject.SetActive(rejectedTransition);
         alreadyHasTheBatteryTextAdvise.gameObject.SetActive(rejectedTransition);
         levelPassedTextAdvise.gameObject.SetActive(rejectedTransition);
+        loadingSubScene.gameObject.SetActive(false); pauseSubScene.gameObject.SetActive(false);
 
         nameOftheCurrentScene = SceneManager.GetActiveScene().name; //get the name of the current active scene.
     }
@@ -136,12 +142,23 @@ public class GrabbingObject : MonoBehaviour
 
         if (ausiliarCoroutineVariable == 1) //if the first level is passed
         {
+            if (loadingSubScene.gameObject.activeInHierarchy != true) //if the loading scene isn't already started
+            {
+                loadingSubScene.gameObject.SetActive(true); // active the loading sub scene (for the transition between the two levels).
+                pauseSubScene.gameObject.SetActive(false); textAndButtons.gameObject.SetActive(false); // disactive all the canvas(excluding zero).
+                
+            }
             SceneManager.LoadScene(2); //load the second level.
             DataPersistence.instanceDataPersistence.levelAvancement = 2; //data persistence level advance 2.
         }
 
         if(ausiliarCoroutineVariable2 == 1) //if the second level is passed
         {
+            if (loadingSubScene.gameObject.activeInHierarchy != true) //if the loading scene isn't already started
+            {
+                loadingSubScene.gameObject.SetActive(true);
+                pauseSubScene.gameObject.SetActive(false); textAndButtons.gameObject.SetActive(false); // disactive all the canvas(excluding zero).
+            }
             SceneManager.LoadScene(3); //load the third level.
             DataPersistence.instanceDataPersistence.levelAvancement = 3; //data persistence level advance 3
         }

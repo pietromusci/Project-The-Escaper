@@ -104,7 +104,7 @@ public class GameManager1 : MonoBehaviour
     //function that return 3 seconds of waiting for the coroutine.
     private IEnumerator LoadingCoroutine()
     {
-        yield return new WaitForSeconds(4.5f); // three seconds of waiting.
+        yield return new WaitForSeconds(1.0f); // one second of waiting.
         isCoroutineEnded = true;
     }
 
